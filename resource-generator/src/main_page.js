@@ -10,7 +10,7 @@ class MainPage extends React.Component {
         <img src="" />
       </div>
       <button class="nav-toggle" aria-label="toggle navigation">
-        <span class="hamburger"> </span>
+        <span class="The_hamburger"> </span>
       </button>
       <nav class="nav">
         <ul class="nav__list">
