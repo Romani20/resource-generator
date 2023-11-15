@@ -7,12 +7,12 @@
 # [
 #     {"id": 1, 
 #      "resource_name": "Writing Workshop"
-#      "category": "Academics"
+#      "resource_type": "Academics"
 #      "keywords": {"write", "essay", "English", "improve writing"}},
 
 #    {"id": 2, 
 #      "resource_name": "Resource Center"
-#      "category": "Equity"
+#      "resource_type": "Equity"
 #      "keywords": {"equity", "diversity", "pantry", "fgli"}}
 # ]
 
