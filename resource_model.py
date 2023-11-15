@@ -2,7 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-class WesResource(db.Model):
+class wes_resource(db.Model):
     """Model forming the schema of information stored in our database
        for each resource. 
 
@@ -10,7 +10,7 @@ class WesResource(db.Model):
         db (SQL database): the datbase in which information from the 
         model is persited. 
     """
-    
+
     id = db.Column(db.Integer, primary_key=True)
     resource_name = db.Column(db.String(100), nullable=False)
     link_to_website = db.Column(db.String(100), nullable=False)
