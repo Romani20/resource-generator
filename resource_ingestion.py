@@ -1,3 +1,5 @@
+import search
+
 # Resources and their metadata are ingested from two sources:
 # primary - manually created json objects holding resource information
 # secondary - user added data 
@@ -13,10 +15,10 @@
 #    {"id": 2, 
 #      "resource_name": "Resource Center"
 #      "resource_type": "Equity"
-#      "keywords": {"equity", "diversity", "pantry", "fgli"}}
+#      "keywords": {"social", "diversity", "pantry", "fgli"}}
 # ]
 
-def write_resources_to_database(resources):
+def manually_write_resources_to_database(resources):
     """Parses the json file and write each of its field to a MySQL database. 
 
     Args:
@@ -27,3 +29,13 @@ def write_resources_to_database(resources):
         None: objects are added to table. 
     """
     return "resources added"
+
+
+def write_user_inputted_resource_to_database():
+    """Parses through the metadata the user enrers for a new resource to be added
+       to the database and add the resource to the db. 
+
+    Returns:
+        None_: new resource is added to the database.
+    """
+    return "user_inputted"
