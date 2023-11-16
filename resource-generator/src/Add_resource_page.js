@@ -2,6 +2,9 @@ import React from 'react';
 import resourceCss from "./Add_resource_page.css";
 
 class AddResource extends React.Component {
+    //This is a page where users go to add resource. It takes information and a brief 
+    //description about the resource a user wants to ass and updates the data base with the new resource. 
+    //below there's a code to show what the general layout might look like. 
     render() {
         return ( 
             <div className= "AddResource">
