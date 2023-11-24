@@ -1,12 +1,14 @@
 #Module to provides backend support for user authentication
 # using the Flask micro framework.
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-import models
+from models import *
 import unit_tests
+from flask_login import login_user, login_required, logout_user, current_user
+from flask import Blueprint, render_template, request, flash, redirect, url_for
 
 authenticate = Blueprint('auth', __name__)
 
-#@authenticate.route('/login', methods=['GET', 'POST'])
+@authenticate.route('/login', methods=['GET', 'POST'])
 def login(email, password, user):
     """Log a user into a the webpage's homepage. It accecpts
         user's email and password: if the email does not exist or
@@ -17,23 +19,33 @@ def login(email, password, user):
     # email = "dummy_entered_email"
     # password = "dummy_entered_password"
 
-    if user:
-        if user.password == password:
-            return "Correct_password"
-        else:
-            # Raise error
-            return "Incorrect_password"
-    else:
-        # Raise email doesn't exist
-        return "Email doesn't exist"
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
 
+        user = User.query.filter_by(email=email).first()
+        if user:
+            if user.password == password:
+                flash('Logged in successfully!', category='success')
+                login_user(user, remember=True)
+                return redirect(url_for('views.home'))
+            else:
+                flash('Incorrect password, try again.', category='error')
+        else:
+            flash('Email does not exist.', category='error')
+
+    return render_template("sign-In-page.js", user=current_user)
+
+@authenticate.route('/login')
 def logout():
     """Logs out user from the main homepage to the login in page. 
     """
+    logout_user()
+    return redirect(url_for('auth.login'))
 
-    return "logged out"
 
-def signup(email, name, password, confirm_password):
+@authenticate.route('/sign-up', methods=['GET', 'POST'])
+def signup():
     """Accepts an email, name, password, and confirmation password
     from the user and create an account for them to access our service.
     If the email already exists, user is prompted to enter a new email -or
@@ -41,19 +53,33 @@ def signup(email, name, password, confirm_password):
     minimum, the password should be at least 5 characters long and their
     name should be atleast 1 character long.
     """
-    if len(name) < 1:
-        # flash user error
-        return "Invalid name"
-    elif len(password) < 5:
-        # flash user error
-        return "Password too short"
-    elif password != confirm_password:
-        # flash user error
-        return "Passwords don't match"
-    else:
-        # flash user success
-        new_user = models.User(email=email, password=password)
-    return new_user.email
+    if request.method == 'POST':
+        email = request.form.get('email')
+        first_name = request.form.get('firstName')
+        last_name = request.form.get('lastname')
+        password1 = request.form.get('password1')
+        password2 = request.form.get('password2')
+
+        user = User.query.filter_by(email=email).first()
+        if user:
+            flash('Email already exists.', category='error')
+        elif len(email) < 4:
+            flash('Email must be greater than 3 characters.', category='error')
+        elif len(first_name) < 2:
+            flash('First name must be greater than 1 character.', category='error')
+        elif password1 != password2:
+            flash('Passwords don\'t match.', category='error')
+        elif len(password1) < 7:
+            flash('Password must be at least 7 characters.', category='error')
+        else:
+            new_user = User(id=hash(first_name+last_name), email=email, first_name=first_name, password=password1)
+            db.session.add(new_user)
+            db.session.commit()
+            login_user(new_user, remember=True)
+            flash('Account created!', category='success')
+            return redirect(url_for('views.home'))
+
+    return render_template("create_account_page.js", user=current_user)
 
 if __name__ == "__main__":
     # login()
@@ -64,7 +90,7 @@ if __name__ == "__main__":
     # 1. testing login()
 
     # login_happy_case
-    user = models.User(email="dummy@gmail.com", password="dummypassword")
+    user = User(email="dummy@gmail.com", password="dummypassword")
     email = "dummy@gmail.com"
     password = "dummypassword"
 
@@ -86,7 +112,7 @@ if __name__ == "__main__":
     confirm = "dummypassword"
 
     print("\n")
-    user = models.User(email=email, password=password)
+    user = User(email=email, password=password)
     unit_tests.genericUnitTest(signup, (email, name, password, confirm), (user.email,))
 
     # signup_invalidname_case)
