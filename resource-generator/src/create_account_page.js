@@ -1,6 +1,31 @@
-import React from 'react';
-class CreateAccount extends React.Component { 
-    render(){
+// import React from 'react';
+import React, { useState } from 'react';
+
+const CreateAccount = () => {
+    const [formData, setFormData] = useState({
+        first_name: '',
+        last_name: '',
+        email: '',
+        password: '',
+    });
+
+    const handleInputChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSignUp = () => {
+        fetch('http://localhost:5000/create_account', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error('Error:', error));
+    };
+
         return (
             <div className="CreateAccount">
             <h1> Welcome </h1>
@@ -21,7 +46,6 @@ class CreateAccount extends React.Component {
             )
 
         }
-    }
 
 export default CreateAccount;
 
