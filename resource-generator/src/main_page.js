@@ -7,7 +7,7 @@ class MainPage extends React.Component {
   //This is the main page that contains a category bar, description bar and side bar. while the front part prompts the user to look for 
   //resources, the side bar will contain things like "Add Resource ", "Log out", "Terms of Services"
   //Below there's a skeleton code to show how the layout might be like although this one only contains a single search bar.
-    render(){
+    render() {
         return ( 
           <Router>
           <div className ="MainPage">
@@ -35,8 +35,9 @@ class MainPage extends React.Component {
             </form>
             </div>
         </div>
-        </Router>)
-
+        </Router>
+        
+        )
     }
 }   
 
