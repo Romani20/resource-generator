@@ -14,6 +14,7 @@ class Resource(db.Model):
     """
 
     id = db.Column(db.Integer, primary_key=True)
+    #id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     resource_name = db.Column(db.String(100), nullable=False)
     link_to_website = db.Column(db.String(255), nullable=False)
     resource_type = db.Column(db.String(100), nullable=False)
