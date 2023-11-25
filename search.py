@@ -1,14 +1,43 @@
 # Module to provide backend support to parse through database
 # and find 3-5 most related resources. 
-import resource_model
 import nltk
 from nltk.corpus import wordnet
 nltk.download('omw-1.4')
+from website import views
+from flask import Blueprint, render_template, request, redirect, url_for, Flask, jsonify
+from flask_login import login_required, current_user
+from flask_sqlalchemy import SQLAlchemy
+
 
 # Keywords that will be removed from users description, if available, 
 # to optimize search
-low_priority_keywords = []
+low_priority_keywords = ['can', 'has', 'if', 've', "don't", 'weren', 'we', 'ain', 'above',
+                          'at', 'each', 'll', "that'll", 'is', 'other', "weren't", 'isn',
+                        'doing', "wouldn't", 'couldn', 'shouldn', "mustn't", 'i', 'this',
+                        'both', 'by', 'own', 'aren', 'for', 'once', 'not', "aren't", 'having',
+                        'am', 'its', "should've", 'now', 'out', 'in', "shan't", 'why', "should"
+                        , 'some', 'haven', 'was', 'his', 'she', 'themselves', "wasn't", "you"
+                        , 'into', 'how', 'didn', 'few', 'her', "you'll", 'from', 'very', "does",
+                        'before', 'only', 'should', 'our', 'yourself', 'their', 'while', "couldn't",
+                        'were', 'below', 'who', "you're", 'any', 'there', 'ourselves', 'my', 'because',
+                        'to', 'don', 'nor', 'through', 'had', 'doesn', 'won', 'more', 'a', 'did', 'such',
+                        'just', 'be', 'here', 're', 'that', 'but', 'and', 'so', "isn't", 'of', 'further',
+                        'or', "needn't", 'me', 'does', 'too', 'd', 'been', 'an', "you'd", 'do',
+                        'over', 'where', 'mustn', 'yours', 'until', "she's", 'same', 'are', 'being',
+                        "hadn't", 'them', 'after', 'have', 's', "didn't", "won't", 'yourselves', 'him',
+                        'myself', 'than', 'it', 'whom', 'they', 'then', 'ma', 'herself', 'again', 
+                        'himself', 'with', 'o', 'what', 'off', 'all', 'needn', "hasn't", 'most', 'up',
+                        'your', 'the', 'against', 'no', 'you', 'these', 'when', 'as', 'between', 'under',
+                        'will', 'about', 'on', 'during', 'm', 't', 'hers', 'theirs', 'would', 'ours',
+                        'itself', 'those', 'hadn', 'hasn', "haven't", 'which', "it's", "mightn't", 'down', 
+                        'he', 'i']
 
+
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db' 
+db = SQLAlchemy(app)
+
+views.views.route('/filter', methods=['POST'])
 def filter():
     """Collects user input and search the database for closest match.
     The search works by Finding matches between values the user enters in "explicit 
@@ -16,8 +45,9 @@ def filter():
     in filtering by explicit values.
     
     """
-
-    return "filtered_resources"
+    #with app.app_context():
+    user_input = request.form.get('q')
+    return jsonify({'user_input': user_input})
 
 def refine_keywords():
     """Finds "high yield" words in a user description, persist those words into
@@ -59,8 +89,8 @@ def complete_search(resource_similarity):
     return "render_template(search_results.html, results=results)"
 
 
-if __name__ == "__main__":
-    complete_search(calculate_similarity(filter(), refine_keywords()))
+# if __name__ == "__main__":
+#     complete_search(calculate_similarity(filter(), refine_keywords()))
 
     #UNIT TESTS - SEARCH FEATURE 
     # Testing filter() 
