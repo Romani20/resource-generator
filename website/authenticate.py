@@ -4,6 +4,7 @@ from flask_login import login_user, login_required, logout_user, current_user
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from . import db
 import logging
+from sqlalchemy import and_
 
 #authenticate = Flask(__name__)
 
@@ -87,17 +88,22 @@ def signup():
     
     return render_template("sign_up.html", user=current_user)
 
-authenticate.route("/search")
+authenticate.route("/search", methods=['GET', 'POST'])
 def search():
-    q = request.args.get("q")
-    #print(q)
-    if q:
-        logging.info("Not empty")
+    if request.method == 'POST':
+        category = request.args.get("category")
+        q = request.args.get("q")
+        #print(q)
+        if q and category:
+            logging.info("Not empty")
 
-    if q:
-        results = Resource.query.filter(Resource.resource_name.icontains(q)).limit(2).all()
-    else:
-        results = []
+        if q and category:
+            results = Resource.query.filter(and_(
+                Resource.resource_name.ilike(f"%{q}%"),
+                Resource.resource_type.ilike(f"%{category}%")
+            )).limit(2).all()
+        else:
+            results = []
 
     return render_template("search.html", results=results)
 
