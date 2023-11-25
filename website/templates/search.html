@@ -1,5 +1,30 @@
-{% for result in results %}
+{% extends "base.html" %} {% block title %}Results{% endblock %} {% block content
+    %}
+
+<!-- {% for result in results %}
 <tr>
     <td>{{ result.resource_name }}</td>
 </tr>
-{% endfor %}
+{% endfor %} -->
+
+<!-- <!DOCTYPE html>
+<html> -->
+<!-- <head>
+    <title>Search Results</title> -->
+</head>
+<body>
+    <h2>Search Results</h2>
+    
+    {% if results %}
+        <ul>
+            {% for result in results %}
+                <li>{{ result.resource_name }} - {{ result.resource_type }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+</body>
+</html>
+
+{% endblock %}
