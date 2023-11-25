@@ -1,0 +1,57 @@
+{% extends "base.html" %} {% block title %}Login{% endblock %} {% block content
+  %}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resource Search</title>
+    <link rel="stylesheet" href="main_page.css" />
+    <script src="https://unpkg.com/htmx.org@1.9.4"></script>
+  </head>
+  <body>
+    <div className="MainPage">
+      <label className="hamburger-menu">
+        <input type="checkbox" />
+      </label>
+      <aside className="sidebar">
+        <nav>
+          <div>
+            <a href="Add_resource_page.html"> Add Resource </a>
+          </div>
+          <div>Log out</div>
+          <div>Terms of Services</div>
+        </nav>
+      </aside>
+      <div class="main-part">
+        <h1>Welcome to Resource Generator for Wesleyan University!</h1>
+        <p>
+          Please enter some keywords to check if there's a resource that could
+          solve your problems.
+        </p>
+        <form>
+          <input type="text" placeholder="Search..." name="q" />
+          <button type="submit"><img src="Assets/search.png" /></button>
+        </form>
+      </div>
+    </div>
+
+    {% endblock %}
+
+    <!-- <section class="section">
+        <div class="columns">
+          <div class="column is-one-third is-offset-one-third">
+            <input type="text" class="input" placeholder="Search" name="q" hx-get="/search" hx-trigger="keyup changed delay:500ms" hx-target="#results">
+          </div>
+        </div>
+        <table class="table is-fullwidth">
+          <thead>
+            <tr>
+              <th>Resource</th>
+            </tr>
+          </thead>
+          <tbody id="results">
+    
+          </tbody>
+        </table>
+      </section> -->
+  </body>
+</html>
