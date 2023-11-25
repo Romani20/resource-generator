@@ -2,7 +2,7 @@ from sqlalchemy.sql import func
 from . import db
 from flask_login import UserMixin
 
-#db = SQLAlchemy()
+#db = SQLAlchemy() ////
 
 class Resource(db.Model):
     """Model forming the schema of information stored in our database
@@ -25,7 +25,7 @@ class User(db.Model, UserMixin):
 
     Args:
         db (SQL datbase): the database for which information for users
-        is persisted
+        is persisted.
     """
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(150), unique=True)
