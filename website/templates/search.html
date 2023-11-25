@@ -4,7 +4,7 @@
 </head>
 <body>
     </br>
-    <h3>Available resource</h3>
+    <h3>Available resource(s)</h3>
     
     {% if results %}
     <ul>
@@ -12,7 +12,8 @@
             <tr>
                 <td>{{ result.resource_name }}</td>
                 <td>{{ result.email }}</td>
-                <td>{{ result.link_to_website }}</td>
+                <td>{{ result.link_to_website }}</td><br>
+                </tr>
             </tr>
         {% endfor %}
     </ul>
