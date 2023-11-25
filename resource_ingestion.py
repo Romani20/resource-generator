@@ -54,5 +54,4 @@ def write_user_inputted_resource_to_database():
     return "user_inputted"
 
 
-
 manually_write_resources_to_database()
