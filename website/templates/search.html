@@ -16,14 +16,18 @@
     <h2>Search Results</h2>
     
     {% if results %}
-        <ul>
-            {% for result in results %}
-                <li>{{ result.resource_name }} - {{ result.resource_type }}</li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No results found.</p>
-    {% endif %}
+    <ul>
+        {% for result in results %}
+            <!-- <li>{{ result.resource_name }} - {{ result.resource_type }} - {{ result.keywords }}</li> -->
+            <tr>
+                <td>{{ result.resource_name }}</td>
+                <td>{{ result.keywords }}</td>
+            </tr>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No results found.</p>
+{% endif %}
 </body>
 </html>
 
