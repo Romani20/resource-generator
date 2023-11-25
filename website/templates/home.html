@@ -1,18 +1,12 @@
 {% extends "base.html" %} {% block title %}Login{% endblock %} {% block content
   %}
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Resource Search</title>
     <link rel="stylesheet" href="main_page.css" />
-    <script src="https://unpkg.com/htmx.org@1.9.4"></script>
-  </head>
   <body>
-    <div className="MainPage">
-      <label className="hamburger-menu">
+    <div class="MainPage">
+      <label class="hamburger-menu">
         <input type="checkbox" />
       </label>
-      <aside className="sidebar">
+      <aside class="sidebar">
         <nav>
           <div>
             <a href="Add_resource_page.html"> Add Resource </a>
@@ -23,14 +17,43 @@
       </aside>
       <div class="main-part">
         <h1>Welcome to Resource Generator for Wesleyan University!</h1>
-        <p>
-          Please enter some keywords to check if there's a resource that could
-          solve your problems.
-        </p>
         <form>
-          <input type="text" placeholder="Search..." name="q" />
-          <button type="submit"><img src="Assets/search.png" /></button>
+          <div class="form-group">
+            <label for="category">Resource Type </label>
+            <input
+              type="drop-down-menu"
+              class="form-control"
+              id="category"
+              name="category"
+              placeholder="Choose Category"
+            />
+          </div>
+          <!-- <input type="text" placeholder="Search..." name="q" />
+          <button type="submit"><img src="Assets/search.png" /></button> -->
         </form>
+        <section class="section">
+          <div class="columns">
+            <div class="column is-one-third is-offset-one-third">
+              <p>
+                Describe what you need in a few words...
+              </p>
+              <input type="text" class="input" placeholder="Enter description" name="q" hx-get="/search" hx-trigger="keyup changed delay:500ms" hx-target="#results">
+            </br>
+          </br>
+            <button class ="submit_btn"> Submit </button>
+            </div>
+          </div>
+          <table class="table is-fullwidth">
+            <thead>
+              <tr>
+                <th>Resource</th>
+              </tr>
+            </thead>
+            <tbody id="results">
+      
+            </tbody>
+          </table>
+        </section>
       </div>
     </div>
 
