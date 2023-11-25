@@ -7,7 +7,7 @@
 
  :root{
     --bar-width:40px;
-    --bar-height:8px;
+    --bar-height:3px;
     --hamburger-gap: 6px;
     --foreground:black;
     --background:white; 
@@ -24,7 +24,7 @@
     width:max-content;
     position:absolute;
     top: var(--hamburger-margin);
-    left: var(--hamburger-margin);
+    right: var(--hamburger-margin);
     z-index:2;
     cursor:pointer;
 }
@@ -80,26 +80,63 @@
 
 }
 
- .sidebar{
+.sidebar{
     display:flex;
     flex-direction:column;
-    justify-content: flex-end;
-    padding-bottom: 50px;
-    padding-left:1.25em;
-    transition: translate var(--animation-timing); 
-    translate: -100%;
+    justify-content: flex-start;
+    padding-bottom: 20px;
+    padding-right:10em;
+    transition: var(--animation-timing);
+    translate: 100%;
+    margin-left: 100%;
     padding-top: calc(var(--hamburger-height) + var(--hamburger-margin) + 1rem);
-    max-width:15rem;
+    width:50rem;
     min-height:100%; 
+   
+} 
+
+.dropdown-btn {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
 }
- 
+
+  /* Style the dropdown content (hidden by default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+  /* Style the links inside the dropdown */
+.dropdown-content a {
+    padding: 12px 16px;
+    display: block;
+    text-decoration: none;
+    color: #333;
+}
+
+  /* Change color on hover */
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+  /* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+  
 .hamburger-menu:has(input:checked) + .sidebar{
     translate: 0;
 }   
 
-.main-part {
+/* .main-part {
     display: flex;
     flex-direction:column;
     align-items: center;
     padding: 20px;
-} 
+}  */

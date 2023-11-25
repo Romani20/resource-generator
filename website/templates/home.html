@@ -1,23 +1,31 @@
 {% extends "base.html" %} {% block title %}Login{% endblock %} {% block content
   %}
-    <link rel="stylesheet" href="main_page.css" />
-  <body>
+  <link rel="stylesheet" href="main_page.css" />
     <div class="MainPage">
       <label class="hamburger-menu">
-        <input type="checkbox" />
+        <input type="checkbox" /> 
       </label>
       <aside class="sidebar">
         <nav>
           <div>
             <a href="Add_resource_page.html"> Add Resource </a>
           </div>
-          <div>Log out</div>
           <div>Terms of Services</div>
         </nav>
       </aside>
       <div class="main-part">
         <h1>Welcome to Resource Generator for Wesleyan University!</h1>
-        <form>
+
+        <div class="dropdown">
+          <button class="dropdown-btn">Category</button>
+          <div class="dropdown-content">
+            <a href="#">Item 1</a>
+            <a href="#">Item 2</a>
+            <a href="#">Item 3</a>
+          </div>
+        </div>
+
+        <!-- <form>
           <div class="form-group">
             <label for="category">Resource Type </label>
             <input
@@ -28,9 +36,10 @@
               placeholder="Choose Category"
             />
           </div>
-          <!-- <input type="text" placeholder="Search..." name="q" />
-          <button type="submit"><img src="Assets/search.png" /></button> -->
-        </form>
+           <input type="text" placeholder="Search..." name="q" />
+          <button type="submit"><img src="Assets/search.png" /></button> 
+        </form> 
+      -->
         <section class="section">
           <div class="columns">
             <div class="column is-one-third is-offset-one-third">
@@ -50,7 +59,6 @@
               </tr>
             </thead>
             <tbody id="results">
-      
             </tbody>
           </table>
         </section>
@@ -76,5 +84,3 @@
           </tbody>
         </table>
       </section> -->
-  </body>
-</html>
