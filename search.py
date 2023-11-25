@@ -37,17 +37,17 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db' 
 db = SQLAlchemy(app)
 
-views.views.route('/filter', methods=['POST'])
-def filter():
-    """Collects user input and search the database for closest match.
-    The search works by Finding matches between values the user enters in "explicit 
-    fields" (e.g Category) and values found int the database. This method help 
-    in filtering by explicit values.
+# views.views.route('/filter', methods=['POST'])
+# def filter():
+#     """Collects user input and search the database for closest match.
+#     The search works by Finding matches between values the user enters in "explicit 
+#     fields" (e.g Category) and values found int the database. This method help 
+#     in filtering by explicit values.
     
-    """
-    #with app.app_context():
-    user_input = request.form.get('q')
-    return jsonify({'user_input': user_input})
+#     """
+#     #with app.app_context():
+#     user_input = request.form.get('q')
+#     return jsonify({'user_input': user_input})
 
 def refine_keywords():
     """Finds "high yield" words in a user description, persist those words into
