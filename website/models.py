@@ -19,7 +19,7 @@ class Resource(db.Model):
     link_to_website = db.Column(db.String(255), nullable=False)
     resource_type = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False)
-    keywords = db.Column(db.String(500), nullable=False)
+    keywords = db.Column(db.ARRAY(db.String(500)), nullable=False)
 
 class User(db.Model, UserMixin):
     """Model forming the schema to represent each user of our service
