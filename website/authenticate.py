@@ -1,4 +1,4 @@
-from models import *
+from .models import *
 import unit_tests
 from flask_login import login_user, login_required, logout_user, current_user
 from flask import Blueprint, render_template, request, flash, redirect, url_for
