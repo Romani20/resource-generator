@@ -2,7 +2,7 @@ import pandas as pd
 from website import db, models
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-import csv
+import csv, json
 
 # Resources and their metadata are ingested from two sources:
 # primary - manually created json objects holding resource information
@@ -32,8 +32,12 @@ def manually_write_resources_to_database():
             next(csv_reader)
 
             for row in csv_reader:
+                
+                keywords_list=row[2].split(" ")
+                keywords_json = json.dumps(keywords_list)
+
                 resource = models.Resource(id = hash(row[0]), resource_name=row[0], resource_type=row[1],
-                                        link_to_website=row[3], keywords=row[2], email=row[4])
+                                        link_to_website=row[3], keywords=keywords_json, email=row[4])
 
                 db.session.add(resource)
                 db.session.commit()
@@ -48,5 +52,7 @@ def write_user_inputted_resource_to_database():
         None_: new resource is added to the database.
     """
     return "user_inputted"
+
+
 
 manually_write_resources_to_database()
