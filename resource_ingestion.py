@@ -7,20 +7,7 @@ import csv
 # Resources and their metadata are ingested from two sources:
 # primary - manually created json objects holding resource information
 # secondary - user added data 
-# This module will ingest from json files into database.
-
-# Sample json objects:
-# [
-#     {"id": 1, 
-#      "resource_name": "Writing Workshop"
-#      "resource_type": "Academics"
-#      "keywords": {"write", "essay", "English", "improve writing"}},
-
-#    {"id": 2, 
-#      "resource_name": "Resource Center"
-#      "resource_type": "Equity"
-#      "keywords": {"social", "diversity", "pantry", "fgli"}}
-# ]
+# This module will ingest from a csv into database.
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db' 
@@ -47,23 +34,8 @@ def manually_write_resources_to_database():
             for row in csv_reader:
                 resource = models.Resource(id = hash(row[0]), resource_name=row[0], resource_type=row[1],
                                         link_to_website=row[3], keywords=row[2], email=row[4])
-        # for _, row in df.iterrows():
-        #     # resource = models.Resource(id=hash(row['resource_name']),
-        #     #                        resource_name=row["resource_name"],
-        #     #                        link_to_website=row.get("link_to_website", "").strip(),
-        #     #                        resource_type=row.get("resource_type", "").strip(),
-        #     #                        email=row.get("email", "").strip(),
-        #     #                        keywords=row.get("keywords", "").strip())
-
-        #     resource = models.Resource(
-        #     resource_name=row["resource_name"].strip(),
-        #     link_to_website=row["link_to_website"].strip(),
-        #     resource_type=row["resource_type"].strip(),
-        #     email=row["email"].strip(),
-        #     keywords=row["keywords"].strip())
 
                 db.session.add(resource)
-
                 db.session.commit()
                 db.session.close()
 
