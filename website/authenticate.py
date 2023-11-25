@@ -12,7 +12,7 @@ authenticate = Blueprint('authenticate', __name__)
 
 @authenticate.route("/")
 def index():
-    return render_template("home.html")
+    return render_template("home2.html")
 
 @authenticate.route('/login', methods=['GET', 'POST'])
 def login():
@@ -87,26 +87,6 @@ def signup():
             return redirect(url_for('views.home'))
     
     return render_template("sign_up.html", user=current_user)
-
-authenticate.route("/search", methods=['GET', 'POST'])
-def search():
-    if request.method == 'POST':
-        category = request.args.get("category")
-        q = request.args.get("q")
-        #print(q)
-        if q and category:
-            logging.info("Not empty")
-
-        if q and category:
-            results = Resource.query.filter(and_(
-                Resource.resource_name.ilike(f"%{q}%"),
-                Resource.resource_type.ilike(f"%{category}%")
-            )).limit(2).all()
-        else:
-            results = []
-
-    return render_template("search.html", results=results)
-
 
 # if __name__ == "__main__":
 #     # login()
