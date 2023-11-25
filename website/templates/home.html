@@ -1,6 +1,7 @@
 {% extends "base.html" %} {% block title %}Login{% endblock %} {% block content
   %}
   <link rel="stylesheet" href="main_page.css" />
+  <link rel="stylesheet" href="home.css" />
     <div class="MainPage">
       <label class="hamburger-menu">
         <input type="checkbox" /> 
@@ -14,73 +15,44 @@
         </nav>
       </aside>
       <div class="main-part">
+        <form method="POST">
         <h1>Welcome to Resource Generator for Wesleyan University!</h1>
 
-        <div class="dropdown">
-          <button class="dropdown-btn">Category</button>
-          <div class="dropdown-content">
-            <a href="#">Item 1</a>
-            <a href="#">Item 2</a>
-            <a href="#">Item 3</a>
-          </div>
-        </div>
-
-        <!-- <form>
-          <div class="form-group">
-            <label for="category">Resource Type </label>
-            <input
-              type="drop-down-menu"
-              class="form-control"
-              id="category"
-              name="category"
-              placeholder="Choose Category"
-            />
-          </div>
-           <input type="text" placeholder="Search..." name="q" />
-          <button type="submit"><img src="Assets/search.png" /></button> 
-        </form> 
-      -->
+      <p>
+        Select resource type:
+      </p>
+        <select name="category" id="category">
+            <option value="Equity">Equity</option>
+            <option value="Health">Health</option>
+            <option value="Academics">Academics</option>
+          </optgroup>
+        </select>
+        <br>
+      </div>
         <section class="section">
           <div class="columns">
             <div class="column is-one-third is-offset-one-third">
               <p>
                 Describe what you need in a few words...
               </p>
-              <input type="text" class="input" placeholder="Enter description" name="q" hx-get="/search" hx-trigger="keyup changed delay:500ms" hx-target="#results">
+              <input type="text" class="input" placeholder="Enter description" name="q" hx-get="/search2" hx-trigger="keyup changed delay:500ms" hx-target="#results">
             </br>
           </br>
-            <button class ="submit_btn"> Submit </button>
             </div>
-          </div>
-          <table class="table is-fullwidth">
-            <thead>
-              <tr>
-                <th>Resource</th>
-              </tr>
-            </thead>
-            <tbody id="results">
-            </tbody>
-          </table>
-        </section>
       </div>
-    </div>
+      <button class ="submit_btn"> Submit </button>
+    </form>
+    <table class="table is-fullwidth">
+        <thead>
+          <tr>
+            <th>Resource</th>
+          </tr>
+        </thead>
+        <tbody id="results">
+        </tbody>
+      </table>
+    </section>
+  </div>
+  </div>
 
     {% endblock %}
-
-    <!-- <section class="section">
-        <div class="columns">
-          <div class="column is-one-third is-offset-one-third">
-            <input type="text" class="input" placeholder="Search" name="q" hx-get="/search" hx-trigger="keyup changed delay:500ms" hx-target="#results">
-          </div>
-        </div>
-        <table class="table is-fullwidth">
-          <thead>
-            <tr>
-              <th>Resource</th>
-            </tr>
-          </thead>
-          <tbody id="results">
-    
-          </tbody>
-        </table>
-      </section> -->
