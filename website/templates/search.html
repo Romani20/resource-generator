@@ -1,27 +1,18 @@
 {% extends "base.html" %} {% block title %}Results{% endblock %} {% block content
     %}
 
-<!-- {% for result in results %}
-<tr>
-    <td>{{ result.resource_name }}</td>
-</tr>
-{% endfor %} -->
-
-<!-- <!DOCTYPE html>
-<html> -->
-<!-- <head>
-    <title>Search Results</title> -->
 </head>
 <body>
-    <h2>Search Results</h2>
+    </br>
+    <h3>Available resource</h3>
     
     {% if results %}
     <ul>
         {% for result in results %}
-            <!-- <li>{{ result.resource_name }} - {{ result.resource_type }} - {{ result.keywords }}</li> -->
             <tr>
                 <td>{{ result.resource_name }}</td>
-                <td>{{ result.keywords }}</td>
+                <td>{{ result.email }}</td>
+                <td>{{ result.link_to_website }}</td>
             </tr>
         {% endfor %}
     </ul>
