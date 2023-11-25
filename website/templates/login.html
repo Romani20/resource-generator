@@ -1,13 +1,8 @@
 {% extends "base.html" %} {% block title %}Login{% endblock %} {% block content
     %}
-<!DOCTYPE html>
-<html lang="en">
+    <form method = "POST" >
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Resource Search</title>
     <link rel="stylesheet" href="sign-In.css" />
-    <script src="https://unpkg.com/htmx.org@1.9.4"></script>
   </head>
     <div className="SignInPage">
       <h1> Welcome </h1>
@@ -18,14 +13,14 @@
           <div class="Group">
             <input type="Password" class="input-box" placeholder="Your Password" />
           </div>
-            <button type ="button" class = "signup-btn"> Sign In </button>
+            <button type ="submit" class = "signup-btn"> Sign In </button>
             <p> New User? </p>
             <nav>
             <div> 
             <a href="sign_up.html"> Create an account </a>
             </div>
-      </form>
       </div>
+    </form>
    
     <!-- <form method="POST">
       <h3 align="center">Login</h3>

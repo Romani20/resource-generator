@@ -1,27 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Resource Search</title>
-    <link rel="stylesheet" href="./Add_resource_page.css" />
-    <script src="https://unpkg.com/htmx.org@1.9.4"></script>
-  </head>
-  <body>
-    <div className="AddResource">
-      <h3>
-        Hi! Are there any resources that you want to include? Please go ahead
-        and enter the required infromation
-      </h3>
-      <input type="text" placeholder="Name of the Resouce" />
+{% extends "base.html" %} {% block title %}Login{% endblock %} {% block content
+%}
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resource Search</title>
+  <link rel="stylesheet" href="./Add_resource_page.css" />
+  <script src="https://unpkg.com/htmx.org@1.9.4"></script>
+</head>
+<body>
+  <div className="AddResource">
+    <h3>
+      Hi! Are there any resources that you want to include? Please go ahead and
+      enter the required infromation
+    </h3>
+    <input type="text" placeholder="Name of the Resouce" />
 
-      <input type="text" placeholder="Where can people access this resource" />
+    <input type="text" placeholder="Where can people access this resource" />
 
-      <input
-        type="text"
-        placeholder="Please give us a brief description of the resource"
-      />
-      <button>Submit</button>
-    </div>
-  </body>
-</html>
+    <input
+      type="text"
+      placeholder="Please give us a brief description of the resource"
+    />
+    <button>Submit</button>
+  </div>
+</body>
+{% endblock %}
