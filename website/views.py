@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import login_required, current_user
 from .models import Resource
-from sqlalchemy import and_, func
+from sqlalchemy import and_, or_, func
 
 
 views = Blueprint('views', __name__)
@@ -25,21 +25,17 @@ def search_results():
     category = request.args.get('category')
     keyword_str = request.args.get('q')
 
-    keywords = keyword_str.split(' ') if keyword_str else []
+    keyword = keyword_str.split(' ') if keyword_str else []
+    keywords = []
+    size = len(keyword)
+    if keyword[size-1] == "":
+        keywords = keyword[:-1]
+    else: keywords = keyword
 
-    #if category and keywords:
-    # if keywords != []:
-    #     for i in keywords:
-    #         results = Resource.query.filter(
-    #             Resource.resource_type.ilike(f"%{category}%") &
-    #             (Resource.resource_name.ilike(f"%{keywords}%") | Resource.resource_type.ilike(f"%{keyword}%"))
-    #         ).all()
-    # else:
-    #     results = []
     if keywords != []:
         for i in keywords:
             results = Resource.query.filter(
-                    Resource.resource_type.ilike(f"%{category}%") &
+                    Resource.resource_type.ilike(f"%{category}%"), 
                     and_(*[Resource.keywords.ilike(f"%{i}%")])).limit(3).all()
     else:
         results = []
