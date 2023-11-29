@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, make_response
 from flask_login import login_required, current_user
 from .models import Resource
 from sqlalchemy import and_, or_, func
@@ -40,7 +40,10 @@ def search_results():
     else:
         results = []
 
-    return render_template('search.html', results=results, user=current_user)
+    response = make_response(render_template('search.html', results=results, user=current_user))
+    response.headers['Cache-Control'] = 'no-store'
+
+    return response
 
 # views.route('/filter', methods=['POST'])
 # def filter():
