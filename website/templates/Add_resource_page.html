@@ -1,15 +1,16 @@
 {% extends "base.html" %} {% block title %}Login{% endblock %} {% block content
 %}
-<head>
-  <link rel="stylesheet" href="./Add_resource_page.css" />
-</head>
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='Add_resource_page.css') }}"
+/>
 <body>
   <div className="AddResource">
     <h3>
       Hi! Are there any resources that you want to include? Please go ahead and
       enter the required infromation
     </h3>
-    <input type="text" placeholder="Name of the Resouce" />
+    <input type="text" placeholder="Name of the Resource" />
 
     <input type="text" placeholder="Where can people access this resource" />
 
