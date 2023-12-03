@@ -2,20 +2,20 @@ resource_name, resource_type,	keywords, link_to_website, email
 Resource Center,Equity,Minority pantry socioeconomic, https://www.wesleyan.edu/resourcecenter/, therc@wesleyan.edu
 FGLIAB,Equity,FGLI minority low-income, dum, lol
 Peer Tutoring Program,Academics,GPA tutor, dum, lol
-Writing Workshop,Academics,Write essay, https://www.wesleyan.edu/mathcs/math/math_workshop.html, lol
+Writing Workshop,Academics,Write essay, dum, lol
 Math Workshop,Academics,Math GPA homework, https://www.wesleyan.edu/mathcs/math/math_workshop.html, lol
-Math Jam,Academics,Mathematics GPA economics, dum, lol
+Math Jam,Academics,Mathematics GPA economics, https://www.wesleyan.edu/mathcs/math/math_workshop.html, lol
 Davidson Health Center,Health,Headache Pregnant, https://www.wesleyan.edu/healthservices/office/index.html, lol
 Counseling and psychological services (CAPS), Health,depressed mental health issues loss, https://www.wesleyan.edu/caps/, lol
 Usdan cafe, Dining,food hungry cafe vegan eating, dum, lol
 Summerfields, Dining,cafe food hungry cafe vegan eating, dum, lol
-WesWings, Dining,cafe food hungry cafe vegan points eating, dum, lol
-Star & Crescent, Dining,cafe food hungry cafe vegan eating, dum, lol
-Olin Library Center, Academics,library reading quiet study spot, dum, lol 
-Science Library Center, Acdemics,library reading quiet study spot, dum, lol 
-College of Letters Library, Academics,library reading quiet study spot, dum, lol 
-Gordon Career Center, Career,job employ internship tech consulting medical law, dum, lol
-Office of International Students, Student Life,visa f1 international foreign passport, dum, lol
+WesWings, Dining,cafe food hungry cafe vegan points eating, https://weswings.com/, lol
+Star & Crescent, Dining,cafe food hungry cafe vegan eating, https://middletown.adps.org/starandcrescent/, lol
+Olin Library Center, Academics,library reading quiet study spot, https://www.wesleyan.edu/libr/index.html, lol 
+Science Library Center, Acdemics,library reading quiet study spot, https://www.wesleyan.edu/libr/index.html, lol 
+College of Letters Library, Academics,library reading quiet study spot, https://www.wesleyan.edu/libr/deptcollection/COL.html, lol 
+Gordon Career Center, Career,job employ internship tech consulting medical law, https://careercenter.wesleyan.edu/, lol
+Office of International Students, Student Life,visa f1 international foreign passport, https://www.wesleyan.edu/oisa/, lol
 
 
 
