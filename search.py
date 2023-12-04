@@ -24,7 +24,7 @@ low_priority_keywords = ['can', 'has', 'if', 've', "don't", 'weren', 'we', 'ain'
                         'were', 'below', 'who', "you're", 'any', 'there', 'ourselves', 'my', 'because',
                         'to', 'don', 'nor', 'through', 'had', 'doesn', 'won', 'more', 'a', 'did', 'such',
                         'just', 'be', 'here', 're', 'that', 'but', 'and', 'so', "isn't", 'of', 'further',
-                        'or', "needn't", 'me', 'does', 'too', 'd', 'been', 'an', "you'd", 'do',
+                        'or', "need", 'me', 'does', 'too', 'd', 'been', 'an', "you'd", 'do',
                         'over', 'where', 'mustn', 'yours', 'until', "she's", 'same', 'are', 'being',
                         "hadn't", 'them', 'after', 'have', 's', "didn't", "won't", 'yourselves', 'him',
                         'myself', 'than', 'it', 'whom', 'they', 'then', 'ma', 'herself', 'again', 
@@ -32,7 +32,7 @@ low_priority_keywords = ['can', 'has', 'if', 've', "don't", 'weren', 'we', 'ain'
                         'your', 'the', 'against', 'no', 'you', 'these', 'when', 'as', 'between', 'under',
                         'will', 'about', 'on', 'during', 'm', 't', 'hers', 'theirs', 'would', 'ours',
                         'itself', 'those', 'hadn', 'hasn', "haven't", 'which', "it's", "mightn't", 'down', 
-                        'he', 'i']
+                        'he', 'i', 'student', 'help', 'want']
     
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db' 
@@ -64,16 +64,6 @@ def refine_keywords(user_input):
             refined_list.append(word)
     
     return refined_list
-
-def get_synonyms(filtered_list):
-    for i in filtered_list:
-        synonyms = []
-        words = thesaurus.Word(i)
-
-        synonyms = words.synonyms()
-        return synonyms
-
-
 
 def calculate_similarity(filter_results, keywords):
     """Calculate the scoring of each resource model based on synonym
