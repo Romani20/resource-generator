@@ -11,6 +11,11 @@ views = Blueprint('views', __name__)
 @views.route('/', methods=['GET', 'POST'])
 @login_required
 def home():
+    """_summary_
+
+    Returns:
+        _type_: _description_
+    """
     if request.method == 'POST':
         category = request.form.get("category")
         q = request.form.get("q")
@@ -23,6 +28,11 @@ def home():
 
 @views.route('/search_results', methods=['GET'])
 def search_results():
+    """_summary_
+
+    Returns:
+        _type_: _description_
+    """
     nlp = spacy.load("en_core_web_md")
     category = request.args.get('category')
     keyword_str = request.args.get('q')
@@ -46,7 +56,7 @@ def search_results():
             for processed_keyword in [nlp.vocab[keyword] for keyword in keywords]:
                 for i in keywords1:
                     similarity_score = processed_keyword.similarity(nlp.vocab[i])
-                    if similarity_score >= 0.3:
+                    if similarity_score >= 0.45:
                         filtered_results.add(result)
 
     response = make_response(render_template('search.html', results=list(filtered_results), user=current_user))
