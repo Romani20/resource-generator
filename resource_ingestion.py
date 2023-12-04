@@ -3,6 +3,7 @@ from website import db, models
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import csv, json
+from sqlalchemy import and_
 
 # Resources and their metadata are ingested from two sources:
 # primary - manually created json objects holding resource information
@@ -36,9 +37,17 @@ def manually_write_resources_to_database():
                 keywords_list=row[2].split(" ")
                 keywords_json = json.dumps(keywords_list)
 
+                # existing_resource = models.Resource.query.filter(
+                #     models.Resource.resource_name.ilike(row[0]), 
+                #     and_(models.Resource.resource_type.ilike(row[1])),
+                #     and_(models.Resource.link_to_website.ilike(row[3]),
+                #     and_(models.Resource.keywords.ilike(keywords_json))),
+                #     and_(models.Resource.email.ilike(row[4])))
+                
+                # if existing_resource == []:
                 resource = models.Resource(id = hash(row[0]), resource_name=row[0], resource_type=row[1],
-                                        link_to_website=row[3], keywords=keywords_json, email=row[4])
-
+                                    link_to_website=row[3], keywords=keywords_json, email=row[4])
+                    
                 db.session.add(resource)
                 db.session.commit()
                 db.session.close()
