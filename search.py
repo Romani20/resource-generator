@@ -4,9 +4,11 @@ import nltk
 from nltk.corpus import wordnet
 nltk.download('omw-1.4')
 from website import views
-from flask import Blueprint, render_template, request, redirect, url_for, Flask, jsonify
+from flask import Flask, jsonify
 from flask_login import login_required, current_user
 from flask_sqlalchemy import SQLAlchemy
+from unit_tests import genericUnitTest
+from thesaurus_api import thesaurus 
 
 
 # Keywords that will be removed from users description, if available, 
@@ -31,8 +33,7 @@ low_priority_keywords = ['can', 'has', 'if', 've', "don't", 'weren', 'we', 'ain'
                         'will', 'about', 'on', 'during', 'm', 't', 'hers', 'theirs', 'would', 'ours',
                         'itself', 'those', 'hadn', 'hasn', "haven't", 'which', "it's", "mightn't", 'down', 
                         'he', 'i']
-
-
+    
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db' 
 db = SQLAlchemy(app)
@@ -49,14 +50,30 @@ db = SQLAlchemy(app)
 #     user_input = request.form.get('q')
 #     return jsonify({'user_input': user_input})
 
-def refine_keywords():
+def refine_keywords(user_input):
     """Finds "high yield" words in a user description, persist those words into
       a list, and use each of those words to help calculate similarity score. 
 
     Returns:
         list: the list of high yeild keywords
     """
-    return "refined_list"
+
+    refined_list = []
+    for word in user_input:
+        if word not in low_priority_keywords:
+            refined_list.append(word)
+    
+    return refined_list
+
+def get_synonyms(filtered_list):
+    for i in filtered_list:
+        synonyms = []
+        words = thesaurus.Word(i)
+
+        synonyms = words.synonyms()
+        return synonyms
+
+
 
 def calculate_similarity(filter_results, keywords):
     """Calculate the scoring of each resource model based on synonym
@@ -96,5 +113,5 @@ def complete_search(resource_similarity):
     # Testing filter() 
         #Initialize a list of ResourceModels 
         
-
+print(get_synonyms(["bad", "huge", "pretty", "big"]))
 
