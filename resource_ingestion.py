@@ -4,6 +4,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import csv, json
 from sqlalchemy import and_
+import search
 
 # Resources and their metadata are ingested from two sources:
 # primary - manually created json objects holding resource information
@@ -34,8 +35,9 @@ def manually_write_resources_to_database():
 
             for row in csv_reader:
                 
-                keywords_list=row[2].split(" ")
-                keywords_json = json.dumps(keywords_list)
+                # keywords_list=row[2].split(" ")
+                # keywords_json = json.dumps(keywords_list)
+                keywords_json = convert_description_to_array(row)
 
                 # existing_resource = models.Resource.query.filter(
                 #     models.Resource.resource_name.ilike(row[0]), 
@@ -52,6 +54,14 @@ def manually_write_resources_to_database():
                 db.session.commit()
                 db.session.close()
 
+def convert_description_to_array(description):
+     refined_desc = ""
+     for i in description:
+         if i not in search.low_priority_keywords:
+             refined_desc += i
+
+     keywords_list = refined_desc.split(" ")
+     return json.dumps(keywords_list)
 
 def write_user_inputted_resource_to_database():
     """Parses through the metadata the user enrers for a new resource to be added
