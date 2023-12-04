@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from .models import Resource
 from sqlalchemy import and_
 import spacy
+from . import db
 
 
 views = Blueprint('views', __name__)
@@ -14,7 +15,7 @@ def home():
     if request.method == 'POST':
         category = request.form.get("category")
         q = request.form.get("q")
-    
+
         if q and category:
             return redirect(url_for('views.search_results', category=category, q=q))
 
@@ -32,10 +33,12 @@ def search_results():
     size = len(keyword)
     if keyword[size-1] == "":
         keywords1 = keyword[:-1]
-    else: keywords1 = keyword
+    else:
+        keywords1 = keyword
 
     if keywords1 != []:
-        results = (Resource.query.filter(Resource.resource_type.ilike(f"%{category}%")).limit(3))
+        results = (Resource.query.filter(
+            Resource.resource_type.ilike(f"%{category}%")).limit(3))
     else:
         results = []
 
@@ -45,11 +48,13 @@ def search_results():
             keywords = result.keywords
             for processed_keyword in [nlp.vocab[keyword] for keyword in keywords]:
                 for i in keywords1:
-                    similarity_score = processed_keyword.similarity(nlp.vocab[i])
+                    similarity_score = processed_keyword.similarity(
+                        nlp.vocab[i])
                     if similarity_score >= 0.3:
                         filtered_results.add(result)
 
-    response = make_response(render_template('search.html', results=list(filtered_results), user=current_user))
+    response = make_response(render_template(
+        'search.html', results=list(filtered_results), user=current_user))
     response.headers['Cache-Control'] = 'no-store'
 
     return response

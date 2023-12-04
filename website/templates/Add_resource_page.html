@@ -9,10 +9,13 @@
     <h3>Are there any resources that you want to include?</h3>
     <br />
     <p>Please go ahead and enter the required information</p>
-    <input type="text" placeholder="Name of the Resource" />
+    <label for = "resource_name"> Resource Name: </label>
+    <input type="text" id = "resource_name" name ="resource_name" placeholder="Example: The Resource Center" />
     <br />
     <br />
-    <select name="category" id="category">
+    <label for = "Link_to_website"> Please include a webiste link if the resource has one: </label>
+    <input type="text" id="link_to_website" name="link_to_website" placeholder ="Example: https://www.wesleyan.edu/resourcecenter/"/>
+    <select name="category" id="resource_type">
       <option value="Equity">Equity</option>
       <option value="Health">Health</option>
       <option value="Academics">Academics</option>
@@ -20,13 +23,15 @@
   </select>
   <br />
    <br/>
-    <input
-      type="text"
-      placeholder="Please give us a brief description of the resource"
-    />
+   <label for="email">Email:</label>
+    <input type="email" id = "email" name="email" placeholder="Please type your email" />
     <br/>
     <br />
-    <input type="email" placeholder="Please type your email" />
+    <label for="keywords">Please provide a short description of the resource</label>
+    <input
+      type="text" id="keywords"
+      placeholder="Example: Helps students with..."
+    />
     <br/>
     <br />
     <button>Submit</button>

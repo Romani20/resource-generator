@@ -6,13 +6,15 @@ from . import db
 import logging
 from sqlalchemy import and_
 
-#authenticate = Flask(__name__)
+# authenticate = Flask(__name__)
 
 authenticate = Blueprint('authenticate', __name__)
+
 
 @authenticate.route("/")
 def index():
     return render_template("home2.html")
+
 
 @authenticate.route('/login', methods=['GET', 'POST'])
 def login():
@@ -21,7 +23,7 @@ def login():
         crednetials are incorrect, then user is a flashed an error message
         and are prompted to either sign up or re-enter details.
     """
-    #if request.method == 'POST':
+    # if request.method == 'POST':
     # email = "dummy_entered_email"
     # password = "dummy_entered_password"
 
@@ -41,6 +43,7 @@ def login():
             flash('Email does not exist.', category='error')
 
     return render_template("login.html", user=current_user)
+
 
 @authenticate.route('/logout')
 @login_required
@@ -79,21 +82,48 @@ def signup():
         elif len(password1) < 7:
             flash('Password must be at least 7 characters.', category='error')
         else:
-            new_user = User(id=hash(first_name), email=email, first_name=first_name, password=password1)
+            new_user = User(id=hash(first_name), email=email,
+                            first_name=first_name, password=password1)
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)
             flash('Account created!', category='success')
             return redirect(url_for('views.home'))
-    
+
     return render_template("sign_up.html", user=current_user)
 
+
+@authenticate.route('/')
+def index_add_resource():
+    resources = Resource.query.all()
+    return render_template('Add_resource_page.html', resources=resources)
+
+
+@authenticate.route('/add_resource', methods=['POST'])
+def add_resource():
+    resource_name = request.form['resource_name']
+    link_to_website = request.form['link_to_website']
+    resource_type = request.form['resource_type']
+    email = request.form['email']
+    keywords = request.form['keywords'].split(',')
+
+    new_resource = Resource(
+        resource_name=resource_name,
+        link_to_website=link_to_website,
+        resource_type=resource_type,
+        email=email,
+        keywords=keywords
+    )
+
+    db.session.add(new_resource)
+    db.session.commit()
+    return redirect(url_for('/index_add_resource'))
 # if __name__ == "__main__":
 #     # login()
 #     # logout()
 #     # signup()
 
-#     # #TESTING THE AUTHENTICATION FEATURE 
+#     # #TESTING THE AUTHENTICATION FEATURE
 #     # 1. testing login()
 
 #     # login_happy_case
