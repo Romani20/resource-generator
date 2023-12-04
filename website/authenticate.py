@@ -5,6 +5,8 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from . import db
 import logging
 from sqlalchemy import and_
+from resource_ingestion import convert_description_to_array as convert
+
 
 # authenticate = Flask(__name__)
 
@@ -95,8 +97,9 @@ def signup():
 
 @authenticate.route('/')
 def index_add_resource():
-    resources = Resource.query.all()
-    return render_template('Add_resource_page.html', resources=resources)
+    # resources = Resource.query.all()
+    return render_template('Add_resource_page.html')
+    #  resources=resources)
 
 
 @authenticate.route('/add_resource', methods=['POST'])
@@ -112,12 +115,12 @@ def add_resource():
         link_to_website=link_to_website,
         resource_type=resource_type,
         email=email,
-        keywords=keywords
+        keywords=convert(keywords)
     )
 
     db.session.add(new_resource)
     db.session.commit()
-    return redirect(url_for('/index_add_resource'))
+    return redirect(url_for('authenticate.index_add_resource'))
 # if __name__ == "__main__":
 #     # login()
 #     # logout()
