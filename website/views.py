@@ -46,6 +46,7 @@ def search_results():
         keywords1 = keyword
 
     if keywords1 != []:
+        results = (Resource.query.filter(Resource.resource_type.ilike(f"%{category}%")).limit(5))
         results = (Resource.query.filter(
             Resource.resource_type.ilike(f"%{category}%")).limit(3))
     else:
@@ -57,9 +58,8 @@ def search_results():
             keywords = result.keywords
             for processed_keyword in [nlp.vocab[keyword] for keyword in keywords]:
                 for i in keywords1:
-                    similarity_score = processed_keyword.similarity(
-                        nlp.vocab[i])
-                    if similarity_score >= 0.45:
+                    similarity_score = processed_keyword.similarity(nlp.vocab[i])
+                    if similarity_score >= 0.4:
                         filtered_results.add(result)
 
     response = make_response(render_template(
