@@ -48,7 +48,7 @@ def search_results():
     if keywords1 != []:
         results = (Resource.query.filter(Resource.resource_type.ilike(f"%{category}%")).limit(5))
         results = (Resource.query.filter(
-            Resource.resource_type.ilike(f"%{category}%")).limit(3))
+            Resource.resource_type.ilike(f"%{category}%")).limit(5))
     else:
         results = []
 
