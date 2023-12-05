@@ -3,7 +3,7 @@ from spacy_wordnet.wordnet_annotator import WordnetAnnotator
 from wonderwords import RandomWord
 import csv
 
-spacy.cli.download("en_core_web_md")
+#spacy.cli.download("en_core_web_md")
 nlp = spacy.load("en_core_web_md")
 
 with open("edited_synonyms.csv", 'r') as file:
