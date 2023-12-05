@@ -8,8 +8,6 @@ from flask import Flask, jsonify
 from flask_login import login_required, current_user
 from flask_sqlalchemy import SQLAlchemy
 from unit_tests import genericUnitTest
-from thesaurus_api import thesaurus 
-
 
 # Keywords that will be removed from users description, if available, 
 # to optimize search
@@ -32,7 +30,7 @@ low_priority_keywords = ['can', 'has', 'if', 've', "don't", 'weren', 'we', 'ain'
                         'your', 'the', 'against', 'no', 'you', 'these', 'when', 'as', 'between', 'under',
                         'will', 'about', 'on', 'during', 'm', 't', 'hers', 'theirs', 'would', 'ours',
                         'itself', 'those', 'hadn', 'hasn', "haven't", 'which', "it's", "mightn't", 'down', 
-                        'he', 'i', 'student', 'help', 'want']
+                        'he', 'i', 'student', 'help', 'want', 'we', 'support', 'provide']
     
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db' 
@@ -95,13 +93,11 @@ def complete_search(resource_similarity):
     """
     return "render_template(search_results.html, results=results)"
 
-
 # if __name__ == "__main__":
 #     complete_search(calculate_similarity(filter(), refine_keywords()))
 
     #UNIT TESTS - SEARCH FEATURE 
     # Testing filter() 
         #Initialize a list of ResourceModels 
-        
-print(get_synonyms(["bad", "huge", "pretty", "big"]))
+
 
