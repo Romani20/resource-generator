@@ -98,7 +98,7 @@ def signup():
 @authenticate.route('/')
 def index_add_resource():
     # resources = Resource.query.all()
-    return render_template('Add_resource_page.html')
+    return render_template('Add_resource_page.html', user=current_user)
     #  resources=resources)
 
 
@@ -108,7 +108,7 @@ def add_resource():
     link_to_website = request.form['link_to_website']
     resource_type = request.form['resource_type']
     email = request.form['email']
-    keywords = request.form['keywords'].split(',')
+    keywords = request.form['keywords']
 
     new_resource = Resource(
         resource_name=resource_name,
@@ -120,6 +120,7 @@ def add_resource():
 
     db.session.add(new_resource)
     db.session.commit()
+    #db.session.close()
     return redirect(url_for('authenticate.index_add_resource'))
 # if __name__ == "__main__":
 #     # login()
