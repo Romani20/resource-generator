@@ -37,7 +37,7 @@ def manually_write_resources_to_database():
                 
                 # keywords_list=row[2].split(" ")
                 # keywords_json = json.dumps(keywords_list)
-                keywords_json = convert_description_to_array(row)
+                keywords_json = convert_description_to_array(row[2])
 
                 # existing_resource = models.Resource.query.filter(
                 #     models.Resource.resource_name.ilike(row[0]), 
@@ -55,13 +55,14 @@ def manually_write_resources_to_database():
                 db.session.close()
 
 def convert_description_to_array(description):
-     refined_desc = ""
-     for i in description:
-         if i not in search.low_priority_keywords:
-             refined_desc += i
+     refined_desc = []
+     keywords_list = description.split(" ")
 
-     keywords_list = refined_desc.split(" ")
-     return json.dumps(keywords_list)
+     for i in keywords_list:
+        if i.lower() not in (item.lower() for item in search.low_priority_keywords):
+            refined_desc.append(i)
+
+     return json.dumps(refined_desc)
 
 def write_user_inputted_resource_to_database():
     """Parses through the metadata the user enrers for a new resource to be added
