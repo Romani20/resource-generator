@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from .models import Resource
 from sqlalchemy import and_
 import spacy
+from search import find_resource_by_keyword_similarity
 
 
 views = Blueprint('views', __name__)
@@ -33,7 +34,7 @@ def search_results():
     Returns:
         _type_: _description_
     """
-    nlp = spacy.load("en_core_web_md")
+    #nlp = spacy.load("en_core_web_md")
     category = request.args.get('category')
     keyword_str = request.args.get('q')
 
@@ -45,25 +46,16 @@ def search_results():
     else:
         keywords1 = keyword
 
+    # if len(keyword_str) > 0:
     if keywords1 != []:
         results = (Resource.query.filter(Resource.resource_type.ilike(f"%{category}%")).limit(5))
-        results = (Resource.query.filter(
-            Resource.resource_type.ilike(f"%{category}%")).limit(5))
     else:
         results = []
 
-    if results != []:
-        filtered_results = set()
-        for result in results:
-            keywords = result.keywords
-            for processed_keyword in [nlp.vocab[keyword] for keyword in keywords]:
-                for i in keywords1:
-                    similarity_score = processed_keyword.similarity(nlp.vocab[i])
-                    if similarity_score >= 0.4:
-                        filtered_results.add(result)
+    result = find_resource_by_keyword_similarity(results, keyword_str)
 
     response = make_response(render_template(
-        'search.html', results=list(filtered_results), user=current_user))
+        'search.html', results=list(result), user=current_user))
     response.headers['Cache-Control'] = 'no-store'
 
     return response
