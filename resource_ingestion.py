@@ -1,10 +1,12 @@
 import pandas as pd
 from website import db, models
+# import models
+# from __init__ import db
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import csv, json
 from sqlalchemy import and_
-import search
+import search as search
 
 # Resources and their metadata are ingested from two sources:
 # primary - manually created json objects holding resource information
@@ -34,19 +36,7 @@ def manually_write_resources_to_database():
             next(csv_reader)
 
             for row in csv_reader:
-                
-                # keywords_list=row[2].split(" ")
-                # keywords_json = json.dumps(keywords_list)
                 keywords_json = convert_description_to_array(row[2])
-
-                # existing_resource = models.Resource.query.filter(
-                #     models.Resource.resource_name.ilike(row[0]), 
-                #     and_(models.Resource.resource_type.ilike(row[1])),
-                #     and_(models.Resource.link_to_website.ilike(row[3]),
-                #     and_(models.Resource.keywords.ilike(keywords_json))),
-                #     and_(models.Resource.email.ilike(row[4])))
-                
-                # if existing_resource == []:
                 resource = models.Resource(id = hash(row[0]), resource_name=row[0], resource_type=row[1],
                                     link_to_website=row[3], keywords=keywords_json, email=row[4])
                     
@@ -55,14 +45,22 @@ def manually_write_resources_to_database():
                 db.session.close()
 
 def convert_description_to_array(description):
-     refined_desc = []
-     keywords_list = description.split(" ")
+    """_summary_
 
-     for i in keywords_list:
+    Args:
+        description (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
+    refined_desc = []
+    keywords_list = description.split(" ")
+
+    for i in keywords_list:
         if i.lower() not in (item.lower() for item in search.low_priority_keywords):
             refined_desc.append(i)
 
-     return json.dumps(refined_desc)
+    return json.dumps(refined_desc)
 
 def write_user_inputted_resource_to_database():
     """Parses through the metadata the user enrers for a new resource to be added

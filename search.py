@@ -3,7 +3,7 @@
 import nltk
 from nltk.corpus import wordnet
 nltk.download('omw-1.4')
-from website import views
+# import views
 from flask import Flask, jsonify
 from flask_login import login_required, current_user
 from flask_sqlalchemy import SQLAlchemy
