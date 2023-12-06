@@ -8,6 +8,11 @@ from flask import Flask, jsonify
 from flask_login import login_required, current_user
 from flask_sqlalchemy import SQLAlchemy
 from unit_tests import genericUnitTest
+import spacy
+import csv, json
+from website import models 
+
+nlp = spacy.load("en_core_web_md")
 
 # Keywords that will be removed from users description, if available, 
 # to optimize search
@@ -30,40 +35,29 @@ low_priority_keywords = ['can', 'has', 'if', 've', "don't", 'weren', 'we', 'ain'
                         'your', 'the', 'against', 'no', 'you', 'these', 'when', 'as', 'between', 'under',
                         'will', 'about', 'on', 'during', 'm', 't', 'hers', 'theirs', 'would', 'ours',
                         'itself', 'those', 'hadn', 'hasn', "haven't", 'which', "it's", "mightn't", 'down', 
-                        'he', 'i', 'student', 'help', 'want', 'we', 'support', 'provide']
-    
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db' 
-db = SQLAlchemy(app)
+                        'he', 'i', 'student', 'help', 'want', 'we', 'support', 'provide']   
 
-# views.views.route('/filter', methods=['POST'])
-# def filter():
-#     """Collects user input and search the database for closest match.
-#     The search works by Finding matches between values the user enters in "explicit 
-#     fields" (e.g Category) and values found int the database. This method help 
-#     in filtering by explicit values.
-    
-#     """
-#     #with app.app_context():
-#     user_input = request.form.get('q')
-#     return jsonify({'user_input': user_input})
 
-def refine_keywords(user_input):
-    """Finds "high yield" words in a user description, persist those words into
-      a list, and use each of those words to help calculate similarity score. 
+def convert_description_to_array(description):
+    """_summary_
+
+    Args:
+        description (_type_): _description_
 
     Returns:
-        list: the list of high yeild keywords
+        _type_: _description_
     """
+    refined_desc = []
+    keywords_list = description.split(" ")
 
-    refined_list = []
-    for word in user_input:
-        if word not in low_priority_keywords:
-            refined_list.append(word)
-    
-    return refined_list
+    for i in keywords_list:
+        if i.lower() not in (item.lower() for item in low_priority_keywords):
+            refined_desc.append(i)
 
-def calculate_similarity(filter_results, keywords):
+    #return json.dumps(refined_desc.split())
+    return json.dumps(refined_desc)
+
+def find_resource_by_keyword_similarity(filter_results, user_input):
     """Calculate the scoring of each resource model based on synonym
     match with keywords from the user's description. Similarity is 
     calculated based on number of synonyms shared by a resource db model 
@@ -78,26 +72,51 @@ def calculate_similarity(filter_results, keywords):
     Returns:
         dict: a dict with keys the similairy score and value the resource
     """
-    return "simialirity scorings"
+    found_resources = set()
+    if filter_results != []:
+        for result in filter_results:
+            keywords = result.keywords
+            for processed_keyword in [nlp.vocab[keyword] for keyword in keywords]:
+                for i in (convert_description_to_array(user_input)):
+                    similarity_score = processed_keyword.similarity(nlp.vocab[i])
+                    if similarity_score >= 0.30:
+                        found_resources.add(result)
+    return found_resources
 
-def complete_search(resource_similarity):
-    """Get the the top 3, if applicable, most similar resources and return
-       them to a search results html template.
+if __name__ == "__main__":
+    # UNIT TESTS - SEARCH FEATURE 
+    #testing convert_description_to_array()
+    res = '["food"]'
+    genericUnitTest(convert_description_to_array, ('i want food',), (res,))
 
-    Args:
-        resource_similarity (dict): the dictionary to get the 3 most similar
-        scored resources from.
+    print("\n")
+    res = '[]'
+    genericUnitTest(convert_description_to_array, ('i had want',), (res,))
 
-    Returns:
-        html: rendered html template with list of resources
-    """
-    return "render_template(search_results.html, results=results)"
+    #testing find_resource_by_keyword_similarity()
+    res1 = models.Resource(keywords = ["money", "economics", "finance"])
+    filtered_list = [res1]
+    result = set([res1])
+    
+    # happy case 1 - exact match
+    print("\n")
+    genericUnitTest(find_resource_by_keyword_similarity, (filtered_list, "I want some money"), (result,))
 
-# if __name__ == "__main__":
-#     complete_search(calculate_similarity(filter(), refine_keywords()))
+    # happy case 1 - similar words: money and capital (sim = ~0.39)
+    print("\n")
+    genericUnitTest(find_resource_by_keyword_similarity, (filtered_list, "I love capital"), (result,))
+    
+    # all low-priority word case
+    print("\n")
+    genericUnitTest(find_resource_by_keyword_similarity, (filtered_list, "I want some"), (set(),))
 
-    #UNIT TESTS - SEARCH FEATURE 
-    # Testing filter() 
-        #Initialize a list of ResourceModels 
+    # non-low priority, low similarity word: money and lungs (sim = ~0.13)
+    print("\n")
+    genericUnitTest(find_resource_by_keyword_similarity, (filtered_list, "I want my lungs"), (set(),))
+
+    # part happy, part sad case
+    print("\n")
+    genericUnitTest(find_resource_by_keyword_similarity, (filtered_list, "I want my money in my lungs"), (result,))
+
 
 
