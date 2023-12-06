@@ -6,7 +6,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import csv, json
 from sqlalchemy import and_
-import search as search
+import search 
 
 # Resources and their metadata are ingested from two sources:
 # primary - manually created json objects holding resource information
