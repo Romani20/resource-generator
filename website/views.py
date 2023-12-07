@@ -1,13 +1,9 @@
 from flask import Blueprint, render_template, request, redirect, url_for, make_response
 from flask_login import login_required, current_user
 from .models import Resource
-from sqlalchemy import and_
-import spacy
-from search import find_resource_by_keyword_similarity
-
+from search import *
 
 views = Blueprint('views', __name__)
-
 
 @views.route('/', methods=['GET', 'POST'])
 @login_required
@@ -34,28 +30,24 @@ def search_results():
     Returns:
         _type_: _description_
     """
-    #nlp = spacy.load("en_core_web_md")
+
     category = request.args.get('category')
     keyword_str = request.args.get('q')
 
-    keyword = keyword_str.split(' ') if keyword_str else []
-    keywords1 = []
-    size = len(keyword)
-    if keyword[size-1] == "":
-        keywords1 = keyword[:-1]
-    else:
-        keywords1 = keyword
+    keywords = keyword_str.split(' ') if keyword_str else []
+    keywords = remove_low_priority_keywords(keywords)
+    results = []
 
-    # if len(keyword_str) > 0:
-    if keywords1 != []:
-        results = (Resource.query.filter(Resource.resource_type.ilike(f"%{category}%")).limit(5))
-    else:
-        results = []
+    if keywords:
+        results = Resource.query.filter(Resource.resource_type.ilike(f"%{category}%")).limit(5)
+        keywords1 = keywords[:-1]
+    else: 
+        keywords1 = keywords
 
-    result = find_resource_by_keyword_similarity(results, keyword_str)
+    filtered_results = set()
+    filtered_results = find_resource_by_keyword_similarity(results, keywords1)
 
-    response = make_response(render_template(
-        'search.html', results=list(result), user=current_user))
-    response.headers['Cache-Control'] = 'no-store'
+    response = make_response(render_template('search.html', results=list(filtered_results), user=current_user))
+    response.headers['Cache-Control'] = 'store'
 
     return response
