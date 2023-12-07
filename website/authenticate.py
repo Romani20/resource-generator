@@ -1,11 +1,9 @@
 from .models import *
-import unit_tests
 from flask_login import login_user, login_required, logout_user, current_user
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, Flask
 from . import db
-import logging
-from sqlalchemy import and_
-from resource_ingestion import convert_description_to_array as convert
+from search import convert_description_to_array as convert
+from flask_sqlalchemy import SQLAlchemy
 
 
 # authenticate = Flask(__name__)
@@ -25,9 +23,6 @@ def login():
         crednetials are incorrect, then user is a flashed an error message
         and are prompted to either sign up or re-enter details.
     """
-    # if request.method == 'POST':
-    # email = "dummy_entered_email"
-    # password = "dummy_entered_password"
 
     if request.method == 'POST':
         email = request.form.get('email')
@@ -104,24 +99,32 @@ def index_add_resource():
 
 @authenticate.route('/add_resource', methods=['POST'])
 def add_resource():
-    resource_name = request.form['resource_name']
-    link_to_website = request.form['link_to_website']
-    resource_type = request.form['resource_type']
-    email = request.form['email']
-    keywords = request.form['keywords']
 
-    new_resource = Resource(
-        resource_name=resource_name,
-        link_to_website=link_to_website,
-        resource_type=resource_type,
-        email=email,
-        keywords=convert(keywords)
-    )
+    app = Flask(__name__)
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db' 
+    db = SQLAlchemy(app)
 
-    db.session.add(new_resource)
-    db.session.commit()
-    #db.session.close()
+    with app.app_context():
+        resource_name = request.form['resource_name']
+        link_to_website = request.form['link_to_website']
+        resource_type = request.form['resource_type']
+        email = request.form['email']
+        keywords = request.form['keywords']
+
+        new_resource = Resource(
+            resource_name=resource_name,
+            link_to_website=link_to_website,
+            resource_type=resource_type,
+            email=email,
+            keywords=convert(keywords)
+        )
+
+        db.session.add(new_resource)
+        db.session.commit()
+        db.session.close()
+        
     return redirect(url_for('authenticate.index_add_resource'))
+
 # if __name__ == "__main__":
 #     # login()
 #     # logout()
