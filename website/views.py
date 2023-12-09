@@ -5,6 +5,7 @@ from search import *
 
 views = Blueprint('views', __name__)
 
+
 @views.route('/', methods=['GET', 'POST'])
 @login_required
 def home():
@@ -39,15 +40,17 @@ def search_results():
     results = []
 
     if keywords:
-        results = Resource.query.filter(Resource.resource_type.ilike(f"%{category}%")).limit(5)
+        results = Resource.query.filter(
+            Resource.resource_type.ilike(f"%{category}%")).limit(5)
         keywords1 = keywords[:-1]
-    else: 
+    else:
         keywords1 = keywords
 
     filtered_results = set()
     filtered_results = find_resource_by_keyword_similarity(results, keywords1)
 
-    response = make_response(render_template('search.html', results=list(filtered_results), user=current_user))
+    response = make_response(render_template(
+        'search.html', results=list(filtered_results), user=current_user))
     response.headers['Cache-Control'] = 'store'
 
     return response

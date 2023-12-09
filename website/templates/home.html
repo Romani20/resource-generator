@@ -12,6 +12,27 @@
           <div>
             <p> <a href="{{ url_for('add_resource_page') }}"> Add Resource </a> </p>
           </div>
+          <div>
+            <p> <a href="#" id="rateResourceLink"> Rate a Resource </a></p>
+            <div id="rateResourceModal" class="modal">
+              <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2>Rate a Resource</h2>
+                <form id="ratingForm" action="{{ url_for('authenticate.submit_rating') }}" method="POST">
+                  <label for="resourceName">Resource Name:</label>
+                  <input type="text" id="resourceName" name="resource_name" autocomplete="off" required >
+                </br>
+                  <label for="accessibility">Accessibility:</label>
+                  <input type="range" id="accessibility" name="accessibility" min="0" max="5" step="1" value="0">
+                </br>
+                  <label for="effectiveness">Effectiveness:</label>
+                  <input type="range" id="effectiveness" name="effectiveness" min="0" max="5" step="1" value="0">
+                </br>
+                  <input type="submit" value="Submit Rating">
+                </form>
+              </div>
+            </div>
+          </div>
           <div>Terms of Services</div>
         </nav>
       </aside>
@@ -59,5 +80,31 @@
     </section>
   </div>
   </div>
+
+  <script>
+    // Get the modal
+    var modal = document.getElementById('rateResourceModal');
+
+    // Get the link that opens the modal
+    var link = document.getElementById('rateResourceLink');
+
+    // When the user clicks the link, open the modal
+    link.onclick = function() {
+      modal.style.display = 'block';
+      modal.style.right = '20px';
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = 'none';
+      }
+    }
+
+    // Close the modal
+    function closeModal() {
+      modal.style.display = 'none';
+    }
+  </script>
 
     {% endblock %}

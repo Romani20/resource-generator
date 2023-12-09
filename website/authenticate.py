@@ -101,7 +101,7 @@ def index_add_resource():
 def add_resource():
 
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db' 
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
     db = SQLAlchemy(app)
 
     with app.app_context():
@@ -122,8 +122,29 @@ def add_resource():
         db.session.add(new_resource)
         db.session.commit()
         db.session.close()
-        
+
     return redirect(url_for('authenticate.index_add_resource'))
+
+
+# Melat Added this
+
+@authenticate.route('/')
+def rate_resource_index():
+
+    return render_template('rate_resource_page.html')
+
+
+@authenticate.route('/submit_rating', methods=['POST'])
+def submit_rating():
+
+    resource_name = request.form.get('resource_name')
+    accessibility = request.form.get('accessibility')
+    effectiveness = request.form.get('effectiveness')
+
+    # We need to process the ratings and save them to a database
+
+    return redirect(url_for('rate_resource_index'))
+
 
 # if __name__ == "__main__":
 #     # login()

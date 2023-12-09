@@ -5,21 +5,40 @@
 <body>
     </br>
     <h3>Available resource(s)</h3>
-    
-    {% if results %}
-    <ul>
-        {% for result in results %}
-            <tr>
-                <td>{{ result.resource_name }}</td>
-                <td>{{ result.email }}</td>
-                    <td><a href="{{ result.link_to_website }}" target="_blank">learn more</a></td><br>
-                </tr>
-            </tr>
-        {% endfor %}
-    </ul>
+{% if results %}
+  <table class="search_table">
+    <thead>
+      <tr>
+        <th >Resource Name</th>
+        <th>Email</th>
+        <th>Website</th>
+        <th>Ratings</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for result in results %}
+        <tr>
+          <td>{{ result.resource_name }}</td>
+          <td>{{ result.email }}</td>
+          <td><a href="{{ result.link_to_website }}" target="_blank">Learn more</a></td>
+          <td>{{ result.rating }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 {% else %}
-    <p>No results found.</p>
+  <p>No results found.</p>
 {% endif %}
+
+<style>
+table{
+    width: 100%;
+} 
+th, td {
+    padding: 6px;
+    text-align:left;
+}
+</style>
 </body>
 </html>
 
