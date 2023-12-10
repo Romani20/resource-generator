@@ -20,8 +20,6 @@ class Resource(db.Model):
     resource_type = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False)
     keywords = db.Column(db.ARRAY(db.String(500)), nullable=False)
-    # accessibility = db.Column(db.Float, nullable=False)
-    # effectiviteness = db.Column(db.Float, nullable=False)
     feedback = db.Column(db.ARRAY(db.Float), nullable=False)
 
 class User(db.Model, UserMixin):

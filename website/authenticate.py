@@ -5,9 +5,6 @@ from . import db
 from search import convert_description_to_array as convert
 from flask_sqlalchemy import SQLAlchemy
 
-
-# authenticate = Flask(__name__)
-
 authenticate = Blueprint('authenticate', __name__)
 
 

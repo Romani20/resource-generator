@@ -2,8 +2,7 @@ import pandas as pd
 from website import db, models
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-import csv
-import search 
+import csv, search, json 
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db' 
@@ -29,8 +28,13 @@ def manually_write_resources_to_database():
 
             for row in csv_reader:
                 keywords_json = search.convert_description_to_array(row[2])
+                
+                feedback_string = row[5]
+                feedback_list = [float(value) for value in feedback_string.split()]
+                feedback_json = json.dumps(feedback_list)
+
                 resource = models.Resource(id = hash(row[0]), resource_name=row[0], resource_type=row[1],
-                                    link_to_website=row[3], keywords=keywords_json, email=row[4])
+                                    link_to_website=row[3], keywords=keywords_json, email=row[4], feedback=feedback_json)
                     
                 db.session.add(resource)
                 db.session.commit()
@@ -46,4 +50,6 @@ def calculate_ratings(rating, resource_name):
         _type_: _description_
     """
 
-    return calc_rating
+    return 0
+
+manually_write_resources_to_database()
