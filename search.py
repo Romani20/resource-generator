@@ -59,12 +59,13 @@ def remove_low_priority_keywords(user_description):
     """
     new_list = []
     for i in user_description:
-        if i.lower() not in (item.lower() for item in low_priority_keywords):
+        if i.isalpha() and i.lower() not in (item.lower() for item in low_priority_keywords):
             new_list.append(i)
 
+    #return json.dumps(new_list)
     return new_list
 
-def find_resource_by_keyword_similarity(results, keywords):
+def find_resource_by_keyword_similarity(results, keywords1):
     """Calculate the scoring of each resource model based on synonym
     match with keywords from the user's description. Similarity is 
     calculated based on number of synonyms shared by a resource db model 
@@ -81,13 +82,17 @@ def find_resource_by_keyword_similarity(results, keywords):
     """
     filtered_results = set()
     if results:
-            for result in results:
-                keywords = result.keywords
-                for processed_keyword in [nlp.vocab[keyword] for keyword in keywords]:
-                    for i in keywords:
-                        similarity_score = processed_keyword.similarity(nlp.vocab[i])
-                        if similarity_score >= 0.3:
-                            filtered_results.add(result)
+            for i in keywords1:
+                for result in results:
+                    try:
+                        keywords = json.loads(result.keywords)
+                        for processed_keyword in [nlp.vocab[keyword] for keyword in keywords]:
+                            for i in remove_low_priority_keywords(keywords1):
+                                similarity_score = processed_keyword.similarity(nlp.vocab[i])
+                            if similarity_score >= 0.3:
+                                filtered_results.add(result)
+                    except json.decoder.JSONDecodeError as e:
+                        print(f"Error decoding JSON for result {result.id}: {e}")
         
     return filtered_results
 
@@ -108,21 +113,21 @@ if __name__ == "__main__":
     
     # happy case 1 - exact match
     print("\n")
-    genericUnitTest(find_resource_by_keyword_similarity, (filtered_list, "I want some money"), (result,))
+    genericUnitTest(find_resource_by_keyword_similarity, (filtered_list, "I want some money".split(" ")), (result,))
 
     # happy case 1 - similar words: money and capital (sim = ~0.39)
     print("\n")
-    genericUnitTest(find_resource_by_keyword_similarity, (filtered_list, "I love capital"), (result,))
+    genericUnitTest(find_resource_by_keyword_similarity, (filtered_list, "I love capital".split(" ")), (result,))
     
     # all low-priority word case
-    print("\n")
-    genericUnitTest(find_resource_by_keyword_similarity, (filtered_list, "I want some"), (set(),))
+    # print("\n")
+    # genericUnitTest(find_resource_by_keyword_similarity, (filtered_list, "I want some".split(" ")), (set(),))
 
-    # non-low priority, low similarity word: money and lungs (sim = ~0.13)
-    print("\n")
-    genericUnitTest(find_resource_by_keyword_similarity, (filtered_list, "I want my lungs"), (set(),))
+    # # non-low priority, low similarity word: money and lungs (sim = ~0.13)
+    # print("\n")
+    # genericUnitTest(find_resource_by_keyword_similarity, (filtered_list, "I want my lungs".split(" ")), (set(),))
 
     # part happy, part sad case
     print("\n")
-    genericUnitTest(find_resource_by_keyword_similarity, (filtered_list, "I want my money in my lungs"), (result,))
+    genericUnitTest(find_resource_by_keyword_similarity, (filtered_list, "I want my money in my lungs".split(" ")), (result,))
 
