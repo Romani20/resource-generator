@@ -35,3 +35,15 @@ def manually_write_resources_to_database():
                 db.session.add(resource)
                 db.session.commit()
                 db.session.close()
+
+def calculate_ratings(rating, resource_name):
+    """_summary_
+
+    Args:
+        rating (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
+
+    return calc_rating
