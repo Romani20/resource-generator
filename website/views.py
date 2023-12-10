@@ -49,8 +49,7 @@ def search_results():
     filtered_results = set()
     filtered_results = find_resource_by_keyword_similarity(results, keywords1)
 
-    response = make_response(render_template(
-        'search.html', results=list(filtered_results), user=current_user))
-    response.headers['Cache-Control'] = 'store'
+    response = make_response(render_template('search.html', results=list(filtered_results), user=current_user, refresh=1))
+    response.headers['Cache-Control'] = 'no-store'
 
     return response
