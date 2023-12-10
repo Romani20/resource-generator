@@ -126,5 +126,3 @@ if __name__ == "__main__":
     print("\n")
     genericUnitTest(find_resource_by_keyword_similarity, (filtered_list, "I want my money in my lungs"), (result,))
 
-
-
