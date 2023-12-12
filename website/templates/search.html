@@ -1,50 +1,49 @@
-{% extends "base.html" %} {% block title %}Results{% endblock %} {% block content
-  %}
+{% extends "base.html" %}
+{% block title %}Results{% endblock %}
+{% block content %}
+  </head>
+  <body>
+    <br><br>
+    <h3>Available resource(s)</h3><br>
+    {% if results %}
+      <style>
+        .search_table {
+          border-collapse: collapse;
+          width: auto; /* Let the table adjust to the content */
+        }
 
-</head>
-<body>
-  </br><br>
-  <h3>Available resource(s)</h3><br>
-{% if results %}
-<style>
-  .search_table {
-    border-collapse: collapse;
-    width: auto; /* Let the table adjust to the content */
-  }
-
-  .search_table th, .search_table td {
-    padding: 10px; /* Adjust the padding as needed */
-    border: 1px solid #ddd; /* Optional: add borders for better visibility */
-  }
-</style>
-<table class="search_table">
-  <thead>
-    <tr>
-      <th >Resource Name</th>
-      <th>Email</th>
-      <th>Website</th>
-      <th>Ratings</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for result in results %}
-      <tr>
-        <td>{{ result.resource_name }}</td>
-        <td>{{ result.email }}</td>
-        <td><a href="{{ result.link_to_website }}" target="_blank">Learn more</a></td>
-        <td>
-          Accessibility: {{ result.feedback[0]|float|round(2) }}<br>
-          Effectiveness: {{ result.feedback[1]|float|round(2) }}<br>
-          Number of ratings: {{ result.feedback_count }}
-      </td>
-      </tr>
-    {% endfor %}
-  </tbody>
-</table>
-{% else %}
-    <p>No results found.</p>
-{% endif %}
-</body>
+        .search_table th, .search_table td {
+          padding: 10px; /* Adjust the padding as needed */
+          border: 1px solid #ddd; /* Optional: add borders for better visibility */
+        }
+      </style>
+      <table class="search_table">
+        <thead>
+          <tr>
+            <th>Resource Name</th>
+            <th>Email</th>
+            <th>Website</th>
+            <th>Ratings (out of 5)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for key, value in results.items() %}
+            <tr>
+              <td>{{ key.resource_name }}</td>
+              <td>{{ key.email }}</td>
+              <td><a href="{{ value.link_to_website }}" target="_blank">Learn more</a></td>
+              <td>
+                Accessibility: {{ value[0]|float|round(2) }}<br>
+                Effectiveness: {{ value[1]|float|round(2) }}<br>
+                Number of ratings: {{ key.feedback_count }}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No results found.</p>
+    {% endif %}
+  </body>
 </html>
-
 {% endblock %}
