@@ -32,7 +32,11 @@
         <td>{{ result.resource_name }}</td>
         <td>{{ result.email }}</td>
         <td><a href="{{ result.link_to_website }}" target="_blank">Learn more</a></td>
-        <td>{{ result.rating }}</td>
+        <td>
+          Accessibility: {{ result.feedback[0]|float|round(2) }}<br>
+          Effectiveness: {{ result.feedback[1]|float|round(2) }}<br>
+          Number of ratings: {{ result.feedback_count }}
+      </td>
       </tr>
     {% endfor %}
   </tbody>
