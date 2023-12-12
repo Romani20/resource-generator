@@ -1,6 +1,6 @@
 from .models import *
 from flask_login import login_user, login_required, logout_user, current_user
-from flask import Blueprint, render_template, request, flash, redirect, url_for, Flask, session, current_app
+from flask import Blueprint, render_template, request, flash, redirect, url_for, Flask
 from . import db, create_app
 from search import convert_description_to_array as convert
 from flask_sqlalchemy import SQLAlchemy
@@ -137,45 +137,46 @@ def rate_resource_index():
 
 @authenticate.route('/submit_rating', methods=['POST'])
 def submit_rating():
+    """_summary_
 
-    # app = Flask(__name__)
-    # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-    # db = SQLAlchemy(app)
-    # app.config['SECRET_KEY'] = 'hjshjhdjah kjshkjdhjs'
-
-    number_of_feedback = session.get('number_of_feedback', 0)
-    # with app.app_context():
+    Returns:
+        _type_: _description_
+    """
     resource_name = request.form.get('resource_name')
     accessibility = float(request.form.get('accessibility'))
     effectiveness = float(request.form.get('effectiveness'))
     updated_acc = 0
     updated_eff = 0
 
-    resource = Resource.query.filter(Resource.resource_type.ilike(f"%{resource_name}%")).first()
+    resource = Resource.query.filter(Resource.resource_name.ilike(f"%{resource_name}%")).first()
 
     if resource:
         try:
-            curr_rating = json.loads(resource.feedback)
-            updated_rating = []
-            for i in range(len(curr_rating)):
-                updated_acc = (curr_rating[i] + accessibility)/number_of_feedback+1
-                updated_eff = (curr_rating[i] + effectiveness)/number_of_feedback+1
+            user_email = current_user.email
+            existing_raters = json.loads(resource.rated_by_roster)
+
+            if user_email not in existing_raters:
+                existing_raters.append(user_email)
+
+                feed_count = resource.feedback_count + 1
+                curr_rating = json.loads(resource.feedback)
+                updated_rating = []
             
-            updated_rating.append(updated_acc)
-            updated_rating.append(updated_eff)
+                updated_acc = (curr_rating[0] + accessibility)/(feed_count)
+                updated_eff = (curr_rating[1] + effectiveness)/(feed_count)
+                
+                updated_rating.append(updated_acc)
+                updated_rating.append(updated_eff)
 
-            resource.feedback = json.dumps(updated_rating)
-
-            number_of_feedback += 1
-            session['number_of_feedback'] = number_of_feedback
+                resource.feedback = json.dumps(updated_rating)
+                resource.rated_by_roster = json.dumps(existing_raters)
+                resource.feedback_count = feed_count
 
             db.session.commit()
         except json.decoder.JSONDecodeError as e:
             print(f"Error decoding JSON for result: {e}")
 
-    # We need to process the ratings and save them to a database
-
-    return redirect(url_for('rate_resource_index'))
+    return redirect(url_for('views.home'))
 
 
 # if __name__ == "__main__":
