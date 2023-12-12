@@ -21,6 +21,8 @@ class Resource(db.Model):
     email = db.Column(db.String(100), nullable=False)
     keywords = db.Column(db.ARRAY(db.String(500)), nullable=False)
     feedback = db.Column(db.ARRAY(db.Float), nullable=False)
+    feedback_count = db.Column(db.Integer, nullable=False)
+    rated_by_roster = db.Column(db.ARRAY(db.String(500)), nullable=False)
 
 class User(db.Model, UserMixin):
     """Model forming the schema to represent each user of our service
