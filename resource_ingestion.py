@@ -32,9 +32,13 @@ def manually_write_resources_to_database():
                 feedback_string = row[5]
                 feedback_list = [float(value) for value in feedback_string.split()]
                 feedback_json = json.dumps(feedback_list)
+                
+                empty_roster = []
+                roster = json.dumps(empty_roster)
 
                 resource = models.Resource(id = hash(row[0]), resource_name=row[0], resource_type=row[1],
-                                    link_to_website=row[3], keywords=keywords_json, email=row[4], feedback=feedback_json)
+                                    link_to_website=row[3], keywords=keywords_json, email=row[4], feedback=feedback_json, 
+                                    feedback_count=row[6], rated_by_roster=roster)
                     
                 db.session.add(resource)
                 db.session.commit()
