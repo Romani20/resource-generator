@@ -41,9 +41,6 @@ def search_results():
 
     if keywords:
         results = Resource.query.filter(Resource.resource_type.ilike(f"%{category}%")).limit(5)
-    #     keywords1 = keywords[:-1]
-    # else:
-    #     keywords1 = keywords
 
     filtered_results = set()
     filtered_results = find_resource_by_keyword_similarity(results, keywords)
