@@ -19,7 +19,7 @@ def manually_write_resources_to_database():
         None: objects are added to table. 
     """
     with app.app_context():
-        db.session.query(models.Resource).delete()
+        #db.session.query(models.Resource).delete()
         df = pd.read_csv("resource.csv", encoding="latin1")
 
         with open("resource.csv", 'r') as file:
@@ -32,17 +32,22 @@ def manually_write_resources_to_database():
                 feedback_string = row[5]
                 feedback_list = [float(value) for value in feedback_string.split()]
                 feedback_json = json.dumps(feedback_list)
-                
-                empty_roster = []
-                roster = json.dumps(empty_roster)
 
+                # resource = models.Resource(id = hash(row[0]), resource_name=row[0], resource_type=row[1],
+                #                     link_to_website=row[3], keywords=keywords_json, email=row[4], feedback=feedback_json)
+                
                 resource = models.Resource(id = hash(row[0]), resource_name=row[0], resource_type=row[1],
-                                    link_to_website=row[3], keywords=keywords_json, email=row[4], feedback=feedback_json, 
-                                    feedback_count=row[6], rated_by_roster=roster)
-                    
-                db.session.add(resource)
-                db.session.commit()
-                db.session.close()
+                                    link_to_website=row[3], keywords=keywords_json, email=row[4], feedback=feedback_json,
+                                  feedback_count=row[6], rated_by_roster=json.dumps(row[7].split(" ")))
+                
+                resource_exists = db.session.query(models.Resource).filter(
+                    models.Resource.resource_name.ilike(f"%{resource.resource_name}%")).first()
+               
+                if resource_exists is None:
+                    print(resource.resource_name)
+                    db.session.add(resource)
+                    db.session.commit()
+                    db.session.close()
 
 def calculate_ratings(rating, resource_name):
     """_summary_
@@ -56,4 +61,5 @@ def calculate_ratings(rating, resource_name):
 
     return 0
 
+# if __name__ == "main":
 manually_write_resources_to_database()
