@@ -112,12 +112,16 @@ def add_resource():
         email = request.form['email']
         keywords = request.form['keywords']
 
+        rating, count, roster = json.dumps([0.0, 0.0]), 0, json.dumps([])
         new_resource = Resource(
             resource_name=resource_name,
             link_to_website=link_to_website,
             resource_type=resource_type,
             email=email,
-            keywords=convert(keywords)
+            keywords=convert(keywords),
+            feedback=rating,
+            feedback_count=count,
+            rated_by_roster=roster
         )
 
         db.session.add(new_resource)
