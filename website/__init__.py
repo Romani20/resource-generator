@@ -21,7 +21,6 @@ def create_app():
     app.register_blueprint(authenticate, url_prefix='/')
 
     from .models import User
-    # took out , Note
 
     with app.app_context():
         db.create_all()
