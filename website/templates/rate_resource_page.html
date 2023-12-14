@@ -1,0 +1,25 @@
+{% extends "base.html" %} {% block title %}Login{% endblock %} {% block content
+    %}
+<link rel="stylesheet" href="{{ url_for('static', filename='rate_resource_page_css.css') }}"> 
+
+    <div class="RateResource">
+    <form id="ratingForm" class="ratingForm" action="{{ url_for('authenticate.submit_rating') }}" method="POST">
+        <label for = "resourceName"> Resource Name: </label>
+        <input type="text" id="resourceName" name="resource_name" autocomplete="off" required >
+    </br>
+    <div class = "evaluators">
+    <label for="accessibility">Accessibility:</label>
+    <input type="range" id="accessibility" name="accessibility" min="0" max="5" step="1" value="0">
+  </br>
+    <label for="effectiveness">Effectiveness:</label>
+    <input type="range" id="effectiveness" name="effectiveness" min="0" max="5" step="1" value="0">
+  </br>
+</div>
+    <input type="submit" class = "submit_button" value=" Submit Rating ">
+  </form>
+  </div>
+
+
+{% endblock %}
+        
+      

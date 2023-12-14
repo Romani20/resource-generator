@@ -13,36 +13,21 @@
             <p> <a href="{{ url_for('add_resource_page') }}"> Add Resource </a> </p>
           </div>
           <div>
-            <p> <a href="#" id="rateResourceLink"> Rate a Resource </a></p>
-            <div id="rateResourceModal" class="modal">
-              <div class="modal-content">
-                <span class="close" onclick="closeModal()">&times;</span>
-                <h2>Rate a Resource</h2>
-                <form id="ratingForm" action="{{ url_for('authenticate.submit_rating') }}" method="POST">
-                  <label for="resourceName">Resource Name:</label>
-                  <input type="text" id="resourceName" name="resource_name" autocomplete="off" required >
-                </br>
-                  <label for="accessibility">Accessibility:</label>
-                  <input type="range" id="accessibility" name="accessibility" min="0" max="5" step="1" value="0">
-                </br>
-                  <label for="effectiveness">Effectiveness:</label>
-                  <input type="range" id="effectiveness" name="effectiveness" min="0" max="5" step="1" value="0">
-                </br>
-                  <input type="submit" value="Submit Rating">
-                </form>
-              </div>
-            </div>
+            <p> <a href="{{ url_for('rate_resource_page') }}"> Rate a Resource </a> </p>
+            <!-- <p> <a href="#" id="rateResourceLink">  </a> </p> -->
           </div>
-          <div>Terms of Services</div>
+          <div>Terms of Service</div>
         </nav>
       </aside>
       <div class="main-part">
-        <form method="POST" autocomplete="off">
-        <h1>Welcome to Resource Generator for Wesleyan University!</h1>
+        <form class="form" method="POST" autocomplete="off">
+        <h1 class = "welcome">Welcome to Wesfind!</h1>
+        <p> Simply select a category and share your concern. 
+          We'll help identify the most suitable resources at Wesleyan to address your issue! </p>
       <p>
         Select resource type:
       </p>
-        <select name="category" id="category">
+        <select class = "input" name="category" id="category">
             <option value="">Resource type</option>
             <option value="Equity">Equity</option>
             <option value="Health">Health</option>
@@ -53,7 +38,6 @@
           </optgroup>
         </select>
         <br>
-      </div>
         <section class="section">
           <div class="columns">
             <div class="column is-one-third is-offset-one-third">
@@ -68,20 +52,12 @@
       </div>
       <button class ="submit_btn"> Find resource </button>
     </form>
-    <!-- <table class="table is-fullwidth">
-        <thead>
-          <tr>
-            <th>Resource</th>
-          </tr>
-        </thead>
-        <tbody id="results">
-        </tbody>
-      </table> -->
+  </div>
     </section>
   </div>
   </div>
 
-  <script>
+  <!-- <script>
     // Get the modal
     var modal = document.getElementById('rateResourceModal');
 
@@ -107,4 +83,4 @@
     }
   </script>
 
-    {% endblock %}
+    {% endblock %} -->

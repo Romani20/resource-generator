@@ -4,47 +4,75 @@
   rel="stylesheet"
   href="{{ url_for('static', filename='Add_resource_page.css') }}"
 />
-<body>
-  <div className="AddResource">
-    <h3>Are there any resources that you want to include?</h3>
+<div class="AddResource">
+  <h3>Are there any resources you would like to add?</h3>
+  <br />
+  <p>Please go ahead and enter the required information</p>
+  <form action="/add_resource" method="post">
+    <label for="resource_name"> Resource Name: </label>
     <br />
-    <p>Please go ahead and enter the required information</p>
-    <form action="/add_resource" method="post">
-    <label for = "resource_name"> Resource Name: </label>
-    <br />
-    <input type="text" id = "resource_name" name ="resource_name" placeholder="Example: The Resource Center" />
-    <br />
-    <br />
-    <label for = "link_to_website"> Please include a webiste link if the resource has one: </label>
-    <br />
-    <input type="text" id="link_to_website" name="link_to_website" placeholder ="Example: https://www.wesleyan.edu/resourcecenter/"/>
+    <input
+      type="text"
+      class="input"
+      id="resource_name"
+      name="resource_name"
+      autocomplete="off"
+      placeholder="Ex: The Resource Center"
+    />
     <br />
     <br />
-    <select name="resource_type" id="resource_type">
+    <label for="link_to_website">
+      Please include a webiste link if the resource has one:
+    </label>
+    <br />
+    <input
+      type="text"
+      class="input"
+      id="link_to_website"
+      name="link_to_website"
+      autocomplete="off"
+      placeholder="Ex: https://www.wesleyan.edu/resourcecenter/"
+    />
+    <br />
+    <br />
+    <select class="input" name="resource_type" id="resource_type">
       <option value="Equity">Equity</option>
       <option value="Health">Health</option>
       <option value="Academics">Academics</option>
       <option value="Student Life">Student Life</option>
       <option value="Career">Career</option>
       <option value="Dining">Dining</option>
-  </select>
-  <br />
-   <br/>
-   <label for="email">Email:</label>
-   <br />
-    <input type="email" id = "email" name="email" placeholder="Please type your email" />
-    <br/>
+    </select>
     <br />
-    <label for="keywords">Please provide a short description of the resource</label>
-    <br /> 
+    <br />
+    <label for="email">Email:</label>
+    <br />
     <input
-      type="text" id="keywords" name="keywords"
-      placeholder="Example: Helps students with..."
+      type="email"
+      class="input"
+      id="email"
+      name="email"
+      autocomplete="off"
+      placeholder="Please type your email"
     />
-    <br/>
     <br />
-    <button type = "submit"> Add Resource </button>
-  </div>
-</form>
-</body>
+    <br />
+    <label for="keywords"
+      >Please provide a short description of the resource</label
+    >
+    <br />
+    <input
+      type="text"
+      class="input"
+      id="keywords"
+      name="keywords"
+      autocomplete="off"
+      placeholder="Ex: Helps students with..."
+    />
+    <br />
+    <br />
+    <button class="submit_btn" type="submit">Add Resource</button>
+  </form>
+</div>
+
 {% endblock %}

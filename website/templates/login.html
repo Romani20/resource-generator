@@ -1,6 +1,6 @@
 {% extends "base.html" %} {% block title %}Login{% endblock %} {% block content
-  %}
-  <!-- <form method = "POST" >
+%}
+<!-- <form method = "POST" >
     <head>
       <link rel="stylesheet" href="sign-In.css" />
     </head>
@@ -23,16 +23,18 @@
               <div> 
               <a href="sign_up.html"> Create an account </a>
               </div> -->
-  <!-- </div>
+<!-- </div>
       </form> -->
-  
-  <form method="POST">
-    <h3 align="center">Login</h3>
+<link rel="stylesheet" href="{{ url_for('static', filename='sign-In.css') }}" />
+
+<div class="login-signUp-page">
+  <form class="form_signUP" method="POST">
+    <h3 class="title" align="center">Login</h3>
     <div class="form-group">
-      <label for="email">Email Address</label>
+      <label for="email"> Email Address </label>
       <input
         type="email"
-        class="form-control"
+        class="input_singUP"
         id="email"
         name="email"
         placeholder="Enter email"
@@ -42,7 +44,7 @@
       <label for="password">Password</label>
       <input
         type="password"
-        class="form-control"
+        class="input_singUP"
         id="password"
         name="password"
         placeholder="Enter password"
@@ -51,4 +53,5 @@
     <br />
     <button type="submit" class="btn btn-primary">Login</button>
   </form>
-  {% endblock %}
+</div>
+{% endblock %}

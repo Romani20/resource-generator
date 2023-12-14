@@ -39,7 +39,7 @@ def create_app():
 
     @app.route('/rate_resource_page')
     def rate_resource_page():
-        return render_template('rate_resource_page.html')
+        return render_template('rate_resource_page.html', user=User)
 
     return app
 
