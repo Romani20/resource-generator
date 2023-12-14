@@ -16,7 +16,6 @@ authenticate = Blueprint('authenticate', __name__)
 def index():
     return render_template("home2.html")
 
-
 @authenticate.route('/login', methods=['GET', 'POST'])
 def login():
     """Log a user into a the webpage's homepage. It accecpts
@@ -86,101 +85,101 @@ def signup():
             db.session.commit()
             login_user(new_user, remember=True)
             flash('Account created!', category='success')
-            return redirect(url_for('views.home'))
+            return redirect(url_for('authenticate.login'))
 
     return render_template("sign_up.html", user=current_user)
 
 
-@authenticate.route('/')
-def index_add_resource():
-    # resources = Resource.query.all()
-    return render_template('Add_resource_page.html', user=current_user)
-    #  resources=resources)
+# @authenticate.route('/')
+# def index_add_resource():
+#     # resources = Resource.query.all()
+#     return render_template('Add_resource_page.html', user=current_user)
+#     #  resources=resources)
 
 
-@authenticate.route('/add_resource', methods=['POST'])
-def add_resource():
+# @authenticate.route('/add_resource', methods=['POST'])
+# def add_resource():
 
-    app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-    db = SQLAlchemy(app)
+#     app = Flask(__name__)
+#     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+#     db = SQLAlchemy(app)
 
-    with app.app_context():
-        resource_name = request.form['resource_name']
-        link_to_website = request.form['link_to_website']
-        resource_type = request.form['resource_type']
-        email = request.form['email']
-        keywords = request.form['keywords']
+#     with app.app_context():
+#         resource_name = request.form['resource_name']
+#         link_to_website = request.form['link_to_website']
+#         resource_type = request.form['resource_type']
+#         email = request.form['email']
+#         keywords = request.form['keywords']
 
-        rating, count, roster = json.dumps([0.0, 0.0]), 0, json.dumps([])
-        new_resource = Resource(
-            resource_name=resource_name,
-            link_to_website=link_to_website,
-            resource_type=resource_type,
-            email=email,
-            keywords=convert(keywords),
-            feedback=rating,
-            feedback_count=count,
-            rated_by_roster=roster
-        )
+#         rating, count, roster = json.dumps([0.0, 0.0]), 0, json.dumps([])
+#         new_resource = Resource(
+#             resource_name=resource_name,
+#             link_to_website=link_to_website,
+#             resource_type=resource_type,
+#             email=email,
+#             keywords=convert(keywords),
+#             feedback=rating,
+#             feedback_count=count,
+#             rated_by_roster=roster
+#         )
 
-        db.session.add(new_resource)
-        db.session.commit()
-        db.session.close()
+#         db.session.add(new_resource)
+#         db.session.commit()
+#         db.session.close()
 
-    return redirect(url_for('authenticate.index_add_resource'))
-
-
-# Melat Added this
-
-@authenticate.route('/')
-def rate_resource_index():
-
-    return render_template('rate_resource_page.html')
+#     return redirect(url_for('authenticate.index_add_resource'))
 
 
-@authenticate.route('/submit_rating', methods=['POST'])
-def submit_rating():
-    """_summary_
+# # Melat Added this
 
-    Returns:
-        _type_: _description_
-    """
-    resource_name = request.form.get('resource_name')
-    accessibility = float(request.form.get('accessibility'))
-    effectiveness = float(request.form.get('effectiveness'))
-    updated_acc = 0
-    updated_eff = 0
+# @authenticate.route('/')
+# def rate_resource_index():
 
-    resource = Resource.query.filter(Resource.resource_name.ilike(f"%{resource_name}%")).first()
+#     return render_template('rate_resource_page.html')
 
-    if resource:
-        try:
-            user_email = current_user.email
-            existing_raters = json.loads(resource.rated_by_roster)
 
-            if user_email not in existing_raters:
-                existing_raters.append(user_email)
+# @authenticate.route('/submit_rating', methods=['POST'])
+# def submit_rating():
+#     """_summary_
 
-                feed_count = resource.feedback_count + 1
-                curr_rating = json.loads(resource.feedback)
-                updated_rating = []
+#     Returns:
+#         _type_: _description_
+#     """
+#     resource_name = request.form.get('resource_name')
+#     accessibility = float(request.form.get('accessibility'))
+#     effectiveness = float(request.form.get('effectiveness'))
+#     updated_acc = 0
+#     updated_eff = 0
+
+#     resource = Resource.query.filter(Resource.resource_name.ilike(f"%{resource_name}%")).first()
+
+#     if resource:
+#         try:
+#             user_email = current_user.email
+#             existing_raters = json.loads(resource.rated_by_roster)
+
+#             if user_email not in existing_raters:
+#                 existing_raters.append(user_email)
+
+#                 feed_count = resource.feedback_count + 1
+#                 curr_rating = json.loads(resource.feedback)
+#                 updated_rating = []
             
-                updated_acc = (curr_rating[0] + accessibility)/(feed_count)
-                updated_eff = (curr_rating[1] + effectiveness)/(feed_count)
+#                 updated_acc = (curr_rating[0] + accessibility)/(feed_count)
+#                 updated_eff = (curr_rating[1] + effectiveness)/(feed_count)
                 
-                updated_rating.append(updated_acc)
-                updated_rating.append(updated_eff)
+#                 updated_rating.append(updated_acc)
+#                 updated_rating.append(updated_eff)
 
-                resource.feedback = json.dumps(updated_rating)
-                resource.rated_by_roster = json.dumps(existing_raters)
-                resource.feedback_count = feed_count
+#                 resource.feedback = json.dumps(updated_rating)
+#                 resource.rated_by_roster = json.dumps(existing_raters)
+#                 resource.feedback_count = feed_count
 
-            db.session.commit()
-        except json.decoder.JSONDecodeError as e:
-            print(f"Error decoding JSON for result: {e}")
+#             db.session.commit()
+#         except json.decoder.JSONDecodeError as e:
+#             print(f"Error decoding JSON for result: {e}")
 
-    return redirect(url_for('views.home'))
+#     return redirect(url_for('views.home'))
 
 
 # if __name__ == "__main__":
