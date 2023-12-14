@@ -1,0 +1,30 @@
+
+.RateResource{
+    background-color: #ffffff;
+    display: flex;
+    align-items: center; 
+    flex-direction:column;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    
+ .ratingForm {
+    border: 2px solid;
+    padding:30px;
+    box-sizing: border-box ;
+} 
+.evaluators{
+    margin-left: 20px;
+    padding:1.5em;
+}
+.submit_button{
+    margin-top:20px;
+    margin-left: 30%;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
