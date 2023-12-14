@@ -31,7 +31,11 @@
             <tr>
               <td>{{ key.resource_name }}</td>
               <td>{{ key.email }}</td>
-              <td><a href="{{ value.link_to_website }}" target="_blank">Learn more</a></td>
+              <td>{% if value.link_to_website %}
+                <a href="{{ value.link_to_website }}" target="_blank">Learn more</a>
+              {% else %}
+                N/A
+              {% endif %}</td>
               <td>
                 Accessibility: {{ value[0]|float|round(2) }}<br>
                 Effectiveness: {{ value[1]|float|round(2) }}<br>
