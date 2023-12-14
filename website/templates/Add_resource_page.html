@@ -5,14 +5,14 @@
   href="{{ url_for('static', filename='Add_resource_page.css') }}"
 />
 <body>
-  <div className="AddResource">
+  <div class="AddResource">
     <h3>Are there any resources that you want to include?</h3>
     <br />
     <p>Please go ahead and enter the required information</p>
-    <form action="/add_resource" method="post">
+    <form action="/add_resource" method="post" autocomplete="off">
     <label for = "resource_name"> Resource Name: </label>
     <br />
-    <input type="text" id = "resource_name" name ="resource_name" placeholder="Example: The Resource Center" />
+    <input type="text" id = "resource_name" name ="resource_name" placeholder="Example: The Resource Center" required/>
     <br />
     <br />
     <label for = "link_to_website"> Please include a webiste link if the resource has one: </label>
@@ -20,19 +20,21 @@
     <input type="text" id="link_to_website" name="link_to_website" placeholder ="Example: https://www.wesleyan.edu/resourcecenter/"/>
     <br />
     <br />
-    <select name="resource_type" id="resource_type">
+    <p>Select resource category:</p>
+    <select name="resource_type" id="resource_type" required>
       <option value="Equity">Equity</option>
       <option value="Health">Health</option>
       <option value="Academics">Academics</option>
       <option value="Student Life">Student Life</option>
       <option value="Career">Career</option>
       <option value="Dining">Dining</option>
+      <option value="Other">Other</option>
   </select>
   <br />
    <br/>
    <label for="email">Email:</label>
    <br />
-    <input type="email" id = "email" name="email" placeholder="Please type your email" />
+    <input type="email" id = "email" name="email" placeholder="Please type your email" required/>
     <br/>
     <br />
     <label for="keywords">Please provide a short description of the resource</label>
@@ -40,6 +42,7 @@
     <input
       type="text" id="keywords" name="keywords"
       placeholder="Example: Helps students with..."
+      required
     />
     <br/>
     <br />
