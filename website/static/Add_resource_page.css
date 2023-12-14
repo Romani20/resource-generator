@@ -7,3 +7,15 @@
     width: 100%;
     height: 100vh;
   }
+
+#email, #link_to_website, #resource_name {
+    width: 300px; 
+    height: 30px; 
+}
+
+#keywords {
+  width: 300px; 
+  height: 90px; 
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
