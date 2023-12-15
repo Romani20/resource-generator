@@ -25,8 +25,8 @@ def home():
     #     if q and category:
     #         return redirect(url_for('views.search_results', category=category, q=q))
 
-    #return render_template('home.html', user=current_user)
-    return redirect(url_for('authenticate.signup'))
+    return render_template('home.html', user=current_user)
+    #return redirect(url_for('authenticate.signup'))
 
 
 @views.route('/search_results', methods=['GET'])
