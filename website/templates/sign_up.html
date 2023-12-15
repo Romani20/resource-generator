@@ -1,5 +1,26 @@
 {% extends "base.html" %} {% block title %}Sign Up{% endblock %} {% block
 content %}
+<!-- <form method="POST">
+  <div className="CreateAccount">
+  <h1>Welcome</h1>
+    <div class="Group">
+      <input type="text" class="input-box" placeholder="First Name" />
+    </div>
+    <div class="Group">
+      <input type="text" class="input-box" placeholder="Last Name" />
+    </div>
+    <div class="Group">
+      <input type="email" class="input-box" placeholder="Your Email" />
+    </div>
+    <div class="Group">
+      <input type="Password" class="input-box" placeholder="Your Password" />
+    </div>
+    <div class="Group">
+      <input type="Password" class="input-box" placeholder="Your Password" />
+    </div>
+    <button type="button" class="signup-btn">Sign Up</button>
+  </form>
+</div> -->
 <link rel="stylesheet" href="{{ url_for('static', filename='sign-In.css') }}" />
 <div class="login-signUp-page">
   <form class="form_signUP" method="POST" , autocomplete="off">
@@ -45,10 +66,8 @@ content %}
       />
     </div>
     <br />
-    <p>
-      Already have an account?
-      <a href="{{ url_for('authenticate.login') }}">Login here!</a>
-    </p>
+    <p>Already have an account? 
+      <a href="{{ url_for('authenticate.login') }}">Login here!</a></p>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 </div>
