@@ -43,6 +43,13 @@ assume that Python and Pip are already installed on your device.
       1. Open the DB Browser for SQLite app
       2. Go to 'Open Database', find your repository folder, find the folder called instance and then open database.db
   
+# Future directions or suggestions for additional features
+
+- Using a cloud-based database that updates in real-time to ensure seamless synchronization of data
+- Refining our search results by sorting the returned resource table in descending order based on ratings, meaning the highest-rated items should appear at the top.
+- Implementing a mechanism to control the addition of inappropriate resources
+-  
+
 
 
 
