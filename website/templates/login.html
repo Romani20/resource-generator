@@ -1,12 +1,14 @@
 {% extends "base.html" %} {% block title %}Login{% endblock %} {% block content
-  %}
-<style> 
-  #email, #password {
-    width: 300px; 
-    height: 30px; 
-}
-</style> 
-  <form method="POST", autocomplete="off">
+%}
+<style>
+  #email,
+  #password {
+    width: 300px;
+    height: 30px;
+  }
+</style>
+<div class="login-signUp-page">
+  <form class="form_signUP" method="POST" , autocomplete="off">
     <h3 align="center">Login</h3>
     <div class="form-group">
       <label for="email"> Email Address </label>
