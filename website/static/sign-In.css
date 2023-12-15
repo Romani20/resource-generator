@@ -2,14 +2,56 @@
     padding-top:20px;
     padding-bottom:20px;
 }
-
- .login-signUp-page{
+.Sign_up_page{
+    display: flex;
+    flex-direction:row;
     background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    width:100%;
+
 }
- 
+
+.web_description{
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    margin-left: 3em;
+    width:30%;
+    height:100vh;
+    
+} 
+
+@keyframes movingGradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 100% 50%;
+    }
+  }
+  
+.Webname{
+    display: inline-block;
+    font-size: 2.5em; 
+    background: linear-gradient(90deg, rgb(0, 149, 255), #0af, #00f); 
+    color: transparent;
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: movingGradient 3s linear infinite; 
+    margin-left:20%;
+}
+  
+  
+/* .Webname {
+    display: inline-block;
+    font-size: 1.5em; /* Adjust the font size as needed 
+    animation: twinkle 2s infinite;  Adjust the animation duration as needed }*/
+   
+
+  
  .input_singUP {
     display: flex;
     flex-direction: column;
@@ -21,9 +63,10 @@
     border-radius: 5px;
 }
   
- .form_signUP {
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  padding:10px;
-} 
+.sign_up_form{
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+    padding-left:20%;
+
+}
