@@ -14,7 +14,7 @@ authenticate = Blueprint('authenticate', __name__)
 
 @authenticate.route("/")
 def index():
-    return render_template("home2.html")
+    return render_template("home.html")
 
 @authenticate.route('/login', methods=['GET', 'POST'])
 def login():
@@ -33,7 +33,8 @@ def login():
             if user.password == password:
                 flash('Logged in successfully!', category='success')
                 login_user(user, remember=True)
-                return redirect(url_for('views.home'))
+                # return redirect(url_for('views.home'))
+                return render_template("home.html", user=current_user)
             else:
                 flash('Incorrect password, try again.', category='error')
         else:
