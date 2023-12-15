@@ -7,7 +7,7 @@ This project is an application that is going to suggest Wesleyan resources based
     - A search bar to enter keywords (for the user)
     - A pop-up of all the resources generated from the search   
     - A hamburger icon on the side with options to "Logout", view "Terms of Conditions", and "Add Resources"
-   
+      
  # Stakeholders & Users 
 
  Stakeholders
@@ -20,3 +20,31 @@ This project is an application that is going to suggest Wesleyan resources based
 - Resource providers (only members of Wesleyan University)
 - Resource users (to both members and non-members of Wesleyan University)
   
+# Prerequisites and installation instruction
+
+To launch this website successfully, you'll need to install a few essential modules. The following suggestions
+assume that Python and Pip are already installed on your device.
+- Pip install the following packages:
+        - flask
+        - flask_sqlalchemy
+        - pandas
+        - spacy
+        - spacy_wordnet  
+- Run the file called nlp_treshhold to get the spacy training model
+- Downlaod DB Browser for SQLite app compatible to your device using this link: https://sqlitebrowser.org/dl/
+
+
+# To run the project 
+
+- Run the file main.py to run the website
+- In the terminal, you will get a link that looks like "Running on http://127.0.0.1:5000", then go to that site.
+  
+  ## To access and view the database
+      1. Open the DB Browser for SQLite app
+      2. Go to 'Open Database', find your repository folder, find the folder called instance and then open database.db
+  
+
+
+
+
+
