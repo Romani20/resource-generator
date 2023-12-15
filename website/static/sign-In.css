@@ -43,15 +43,7 @@
     animation: movingGradient 3s linear infinite; 
     margin-left:20%;
 }
-  
-  
-/* .Webname {
-    display: inline-block;
-    font-size: 1.5em; /* Adjust the font size as needed 
-    animation: twinkle 2s infinite;  Adjust the animation duration as needed }*/
-   
-
-  
+ 
  .input_singUP {
     display: flex;
     flex-direction: column;
