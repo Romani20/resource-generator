@@ -22,7 +22,6 @@ content %}
   </form>
 </div> -->
 <link rel="stylesheet" href="{{ url_for('static', filename='sign-In.css') }}" />
-<<<<<<< HEAD
 <div class="Sign_up_page">
   <div class="web_description">
     <h2 class="Webname">Wesfind</h2>
@@ -82,55 +81,5 @@ content %}
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
   </div>
-=======
-<div class="login-signUp-page">
-  <form class="form_signUP" method="POST" , autocomplete="off">
-    <h3 class="title" align="center">Sign Up</h3>
-    <div class="form-group">
-      <label for="email">Email Address</label>
-      <input
-        type="email"
-        class="input_singUP"
-        id="email"
-        name="email"
-        placeholder="Enter email"
-      />
-    </div>
-    <div class="form-group">
-      <label for="firstName">First Name</label>
-      <input
-        type="text"
-        class="input_singUP"
-        id="firstName"
-        name="firstName"
-        placeholder="Enter first name"
-      />
-    </div>
-    <div class="form-group">
-      <label for="password1">Password</label>
-      <input
-        type="password"
-        class="input_singUP"
-        id="password1"
-        name="password1"
-        placeholder="Enter password"
-      />
-    </div>
-    <div class="form-group">
-      <label for="password2">Password (Confirm)</label>
-      <input
-        type="password"
-        class="input_singUP"
-        id="password2"
-        name="password2"
-        placeholder="Confirm password"
-      />
-    </div>
-    <br />
-    <p>Already have an account? 
-      <a href="{{ url_for('authenticate.login') }}">Login here!</a></p>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
->>>>>>> ec4712c7fa54a28edf978703bc6b5c6c20f17a5e
 </div>
 {% endblock %}
