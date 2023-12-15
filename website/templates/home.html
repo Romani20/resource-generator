@@ -1,8 +1,6 @@
 {% extends "base.html" %} {% block title %}Login{% endblock %} {% block content
   %}
   <link rel="stylesheet" href="{{ url_for('static', filename='main_page.css') }}"> 
-  <!-- <link rel="stylesheet" href="main_page.css" />
-  <link rel="stylesheet" href="home.css" /> -->
     <div class="MainPage">
       <label class="hamburger-menu">
         <input type="checkbox" /> 
@@ -58,30 +56,4 @@
   </div>
   </div>
 
-  <!-- <script>
-    // Get the modal
-    var modal = document.getElementById('rateResourceModal');
-
-    // Get the link that opens the modal
-    var link = document.getElementById('rateResourceLink');
-
-    // When the user clicks the link, open the modal
-    link.onclick = function() {
-      modal.style.display = 'block';
-      modal.style.right = '20px';
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-      if (event.target == modal) {
-        modal.style.display = 'none';
-      }
-    }
-
-    // Close the modal
-    function closeModal() {
-      modal.style.display = 'none';
-    }
-  </script>
-
-    {% endblock %} -->
+  

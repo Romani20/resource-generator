@@ -8,16 +8,35 @@
         <input type="text" id="resourceName" name="resource_name" autocomplete="off" required >
     </br>
     <div class = "evaluators">
-    <label for="accessibility">Accessibility:</label>
+    <label for="accessibility">Accessibility: </label>
     <input type="range" id="accessibility" name="accessibility" min="0" max="5" step="1" value="0">
+    <span id="accessibilityValue">0</span> 
   </br>
-    <label for="effectiveness">Effectiveness:</label>
+    <label for="effectiveness">Effectiveness: </label>
     <input type="range" id="effectiveness" name="effectiveness" min="0" max="5" step="1" value="0">
+    <span id="effectivenessValue">0</span>
   </br>
 </div>
     <input type="submit" class = "submit_button" value=" Submit Rating ">
   </form>
   </div>
+
+
+  <script>
+    var accessibilityInput = document.getElementById('accessibility');
+    var effectivenessInput = document.getElementById('effectiveness');
+    
+    var accessibilityValue = document.getElementById('accessibilityValue');
+    var effectivenessValue = document.getElementById('effectivenessValue');
+
+    accessibilityInput.addEventListener('input', function() {
+        accessibilityValue.textContent = accessibilityInput.value;
+    });
+
+    effectivenessInput.addEventListener('input', function() {
+        effectivenessValue.textContent = effectivenessInput.value;
+    });
+</script>
 
 
 {% endblock %}
