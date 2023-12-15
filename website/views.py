@@ -11,22 +11,32 @@ views = Blueprint('views', __name__)
 
 
 @views.route('/', methods=['GET', 'POST'])
-@login_required
+# @login_required
 def home():
     """_summary_
 
     Returns:
         _type_: _description_
     """
-    if request.method == 'POST':
-        category = request.form.get("category")
-        q = request.form.get("q")
+    # if request.method == 'POST':
+    #     category = request.form.get("category")
+    #     q = request.form.get("q")
 
-        if q and category:
-            return redirect(url_for('views.search_results', category=category, q=q))
+    #     if q and category:
+    #         return redirect(url_for('views.search_results', category=category, q=q))
 
-    #return render_template('home.html', user=current_user)
-    return redirect(url_for('authenticate.signup'))
+    # #return render_template('home.html', user=current_user)
+    # return redirect(url_for('authenticate.signup'))
+    if not current_user.is_authenticated:
+        if request.method == 'POST':
+            category = request.form.get("category")
+            q = request.form.get("q")
+
+            if q and category:
+                return redirect(url_for('views.search_results', category=category, q=q))
+        return redirect(url_for('authenticate.signup'))
+    else:
+         return render_template('home.html', user=current_user)
 
 @login_required
 @views.route('/search_results', methods=['GET'])
