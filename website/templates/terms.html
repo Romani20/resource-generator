@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Terms{% endblock %}
+{% block content %}
+    <div class="textbox" id="textbox">
+        <span class="close" onclick="toggleTextbox()">&times;</span>
+        <h2>Terms of Conditions</h2>
+<div>
+    <p>Certainly! Here's a more assertive version:</p>
+
+    <ul>
+        <li><strong>Purpose:</strong> Submissions must be intentional and positively contribute to the Wesleyan University community.</li>
+        <li><strong>Responsibility:</strong> Feel free to spread the word to help out your fellow peers!</li>
+        <li><strong>Feedback:</strong> Contact the creators only at <a href="mailto:rosbourne@wesleyan.edu">rosbourne@wesleyan.edu</a> or <a href="mailto:mgebremeskel@wesleyan.edu">mgebremeskel@wesleyan.edu</a> for serious suggestions or concerns.</li>
+    </ul>
+</div>
+
+    <script src="{{ url_for('static', filename='terms.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='terms.css') }}">
+{% endblock %}
+
+
+
