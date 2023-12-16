@@ -42,7 +42,12 @@ assume that Python and Pip are already installed on your device.
   ## To access and view the database
       1. Open the 'DB Browser for SQLite' app
       2. Go to 'Open Database', find your repository folder, find the folder called 'instance', and then open 'database.db'
-### Note: you may have to open your database before running main.py - but either way should work.
+### Notes: 
+    1. You may have to open your database before running main.py - but either way should work.
+    2. The first time you click on the link to access the website, it will take you to the signup page. This is the desired behavior.
+        However, if you should click on the click again (in your terminal), it will take you to the main page. We have made several
+        attempts to have the program not remember that you are logged in, but proper execution of that seems to require more learning.
+        If you want to sign up a new account, you can always go the sign up page from the home page. 
   
 # Future directions or suggestions for additional features
 
