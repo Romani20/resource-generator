@@ -14,19 +14,15 @@
             <p> <a href="{{ url_for('rate_resource_page') }}"> Rate a Resource </a> </p>
             <!-- <p> <a href="#" id="rateResourceLink">  </a> </p> -->
           </div>
-          <div>Terms of Service</div>
+          <div><p> <a href="{{ url_for('terms_of_conditions_page') }}"> Terms of Services </a></div>
         </nav>
       </aside>
       <div class="main-part">
+        <form class="form" method="POST" autocomplete="off">
         <h1 class = "welcome">Welcome to Wesfind!</h1>
         <p> Simply select a category and share your concern. 
           We'll help identify the most suitable resources at Wesleyan to address your issue! </p>
       <p>
-        <form class="form" method="POST" autocomplete="off">
-        <!-- <h1 class = "welcome">Welcome to Wesfind!</h1>
-        <p> Simply select a category and share your concern. 
-          We'll help identify the most suitable resources at Wesleyan to address your issue! </p>
-      <p> -->
         Select resource type:
       </p>
         <select class = "input" name="category" id="category">
