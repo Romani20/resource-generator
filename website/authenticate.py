@@ -1,6 +1,6 @@
 from .models import *
 from flask_login import login_user, login_required, logout_user, current_user
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, session
 from . import db
 import json
 
@@ -9,6 +9,7 @@ authenticate = Blueprint('authenticate', __name__)
 @authenticate.route("/")
 def index():
     return render_template("home2.html")
+
 
 @authenticate.route('/login', methods=['GET', 'POST'])
 def login():
@@ -26,7 +27,9 @@ def login():
         if user:
             if user.password == password:
                 flash('Logged in successfully!', category='success')
-                login_user(user, remember=True)
+                session.permanent = False
+                session.modified = True
+                login_user(user, remember=False)
                 return render_template("home.html", user=current_user)
             else:
                 flash('Incorrect password, try again.', category='error')
@@ -82,55 +85,3 @@ def signup():
             return redirect(url_for('authenticate.login'))
 
     return render_template("sign_up.html", user=current_user)
-
-
-# if __name__ == "__main__":
-#     # login()
-#     # logout()
-#     # signup()
-
-#     # #TESTING THE AUTHENTICATION FEATURE
-#     # 1. testing login()
-
-#     # login_happy_case
-#     user = User(email="dummy@gmail.com", password="dummypassword")
-#     email = "dummy@gmail.com"
-#     password = "dummypassword"
-
-#     unit_tests.genericUnitTest(login, (email, password, user), ("Correct_password",))
-
-#     print("\n")
-#     # login_in_incorrect_password
-#     wrong_password = "wrong_dummypassword"
-#     unit_tests.genericUnitTest(login, (email, wrong_password, user), ("Incorrect_password",))
-
-#     # login_in_email_doesnt_exist - this test requirs application context to search the database
-
-#     # 2. testing signup()
-
-#     # signup_happy_case()
-#     name = "Romani"
-#     email = "dummy@gmail.com"
-#     password = "dummypassword"
-#     confirm = "dummypassword"
-
-#     print("\n")
-#     user = User(email=email, password=password)
-#     unit_tests.genericUnitTest(signup, (email, name, password, confirm), (user.email,))
-
-#     # signup_invalidname_case)
-#     name = ""
-#     print("\n")
-#     unit_tests.genericUnitTest(signup, (email, name, password, confirm), ("Invalid name",))
-
-#     # signup_short_password_case
-#     name = "Romani"
-#     password = "lol"
-#     print("\n")
-#     unit_tests.genericUnitTest(signup, (email, name, password, confirm), ("Password too short",))
-
-#     # signup_passwords_don't_match
-#     password = "dummypassword"
-#     confirm = "dummypassword1"
-#     print("\n")
-#     unit_tests.genericUnitTest(signup, (email, name, password, confirm), ("Passwords don't match",))
