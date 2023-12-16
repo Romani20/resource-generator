@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, make_r
 from flask_login import login_required, current_user
 from .models import Resource
 from search import *
-from . import db, create_app
+from . import db
 from search import convert_description_to_array as convert
 from flask_sqlalchemy import SQLAlchemy
 import time
@@ -26,7 +26,6 @@ def home():
 
         if q and category:
             return redirect(url_for('views.search_results', category=category, q=q))
-    # return redirect(url_for('authenticate.signup'))
     return render_template("home.html", user=current_user)
 
 
