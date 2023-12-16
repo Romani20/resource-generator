@@ -9,24 +9,16 @@ import time
 
 views = Blueprint('views', __name__)
 
-
 @views.route('/', methods=['GET', 'POST'])
-# @login_required
+@login_required
 def home():
-    """_summary_
+    """To directs the user to the main page, send user to the sign up
+    page when the website opens, as well as rednder search results 
+    when a search is made.
 
     Returns:
-        _type_: _description_
+        html template: render of or redirection to approprate page based on context.
     """
-    # if request.method == 'POST':
-    #     category = request.form.get("category")
-    #     q = request.form.get("q")
-
-    #     if q and category:
-    #         return redirect(url_for('views.search_results', category=category, q=q))
-
-    # #return render_template('home.html', user=current_user)
-    # return redirect(url_for('authenticate.signup'))
    
     if request.method == 'POST':
         category = request.form.get("category")
@@ -34,15 +26,18 @@ def home():
 
         if q and category:
             return redirect(url_for('views.search_results', category=category, q=q))
-    return redirect(url_for('authenticate.signup'))
+    # return redirect(url_for('authenticate.signup'))
+    return render_template("home.html", user=current_user)
+
 
 @login_required
 @views.route('/search_results', methods=['GET'])
 def search_results():
-    """_summary_
+    """Supprt user search requests by sending a dictionary of 
+    found resoures to user.
 
     Returns:
-        _type_: _description_
+        html template: sends results to the search.html template.
     """
 
     category = request.args.get('category')
@@ -70,13 +65,24 @@ def search_results():
 @login_required
 @views.route('/add_resource')
 def index_add_resource():
-    # resources = Resource.query.all()
+    """Renders the add_resource page when they click
+        'Add resource' or when their attempt to add resource fails.
+
+    Returns:
+        html template: the template shown
+    """
     return render_template('Add_resource_page.html', user=current_user)
-    #  resources=resources)
+
 
 @login_required
 @views.route('/add_resource', methods=['POST'])
 def add_resource():
+    """Process user's resource addition, by ingesting it to the website
+    and making user';s know if the respource was added or not by flahing messages.
+
+    Returns:
+        html template: template remains after the user adds a resource
+    """
 
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -113,19 +119,23 @@ def add_resource():
     return redirect(url_for('views.index_add_resource'))
 
 
-# Melat Added this
-
-@views.route('/')
+@views.route('/submit_rating')
 def rate_resource_index():
-    return render_template('rate_resource_page.html')
+    """Rendering the rate resource page.
+
+    Returns:
+        html template: the rate resource page
+    """
+    return render_template('rate_resource_page.html', user=current_user)
 
 
 @views.route('/submit_rating', methods=['POST'])
 def submit_rating():
-    """_summary_
+    """Processes user's feedback, ingesting them into the database.
 
     Returns:
-        _type_: _description_
+        html tenplate, db write: writes the rating the databse, and 
+        redirects the user home.
     """
     resource_name = request.form.get('resource_name')
     accessibility = float(request.form.get('accessibility'))
@@ -156,9 +166,11 @@ def submit_rating():
                 resource.feedback = json.dumps(updated_rating)
                 resource.rated_by_roster = json.dumps(existing_raters)
                 resource.feedback_count = feed_count
-
+                flash("Thanks for your feedback!", category='success')
+            else:
+                flash("You already rated this resource.", category='error')
             db.session.commit()
         except json.decoder.JSONDecodeError as e:
             print(f"Error decoding JSON for result: {e}")
 
-    return redirect(url_for('views.home'))
+    return redirect(url_for('views.rate_resource_index'))
