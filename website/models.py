@@ -1,8 +1,6 @@
-from sqlalchemy.sql import func
 from . import db
 from flask_login import UserMixin
 
-#db = SQLAlchemy() /
 
 class Resource(db.Model):
     """Model forming the schema of information stored in our database
