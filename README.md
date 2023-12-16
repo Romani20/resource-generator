@@ -30,9 +30,8 @@ assume that Python and Pip are already installed on your device.
         - pandas
         - spacy
         - spacy_wordnet  
-- Run the file called nlp_treshhold to get the spacy training model
+- Run the file called nlp_treshhold.py to get the spacy training model
 - Download DB Browser for SQLite app compatible with your device using this link: https://sqlitebrowser.org/dl/
-
 
 # To run the project 
 
@@ -42,16 +41,19 @@ assume that Python and Pip are already installed on your device.
   ## To access and view the database
       1. Open the 'DB Browser for SQLite' app
       2. Go to 'Open Database', find your repository folder, find the folder called 'instance', and then open 'database.db'
-### Notes: 
-    1. You may have to open your database before running main.py - but either way should work.
-    2. The first time you click on the link to access the website, it will take you to the signup page. This is the desired behavior.
-        However, if you should click on the click again (in your terminal), it will take you to the main page. We have made several
-        attempts to have the program not remember that you are logged in, but proper execution of that seems to require more learning.
-        If you want to sign up a new account, you can always go the sign up page from the home page. 
   
 # Future directions or suggestions for additional features
 
 - Using a cloud-based database that updates in real-time to ensure seamless synchronization of data
 - Refining our search results by sorting the returned resource table in descending order based on ratings, meaning the highest-rated items should appear at the top.
 - Implementing a mechanism to control the addition of inappropriate resources
--  
+
+# Notes and troubleshooting 
+    1. You may have to open your database before running main.py - but either way should work.
+    2. The first time you click on the link to access the website, it will take you to the signup page. This is the desired behavior.
+        However, if you should click on the click again (in your terminal), it will take you to the main page. We have made several
+        attempts to have the program not remember that you are logged in, but proper execution of that seems to require more learning.
+        If you want to sign up for a new account, you can always go to the signup page from the home page. 
+    3. Because the database is local, sometimes it might get closed after a while, and you might get an error that looks like this if you 
+        try to add resource, feedback, search: "SQL error: database is locked". Try closing and opening the databse to refresh it.
+
