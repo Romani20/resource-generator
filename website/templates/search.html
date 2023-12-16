@@ -31,8 +31,8 @@
             <tr>
               <td>{{ key.resource_name }}</td>
               <td>{{ key.email }}</td>
-              <td>{% if value.link_to_website %}
-                <a href="{{ value.link_to_website }}" target="_blank">Learn more</a>
+              <td>{% if key.link_to_website %}
+                <a href="{{ key.link_to_website }}" target="_blank">Learn more</a>
               {% else %}
                 N/A
               {% endif %}</td>
