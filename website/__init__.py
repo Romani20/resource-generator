@@ -40,6 +40,10 @@ def create_app():
     @app.route('/rate_resource_page')
     def rate_resource_page():
         return render_template('rate_resource_page.html', user=User)
+    
+    @app.route('/toc_page')
+    def terms_of_conditions_page():
+        return render_template('terms.html', user=User)
 
     return app
 
