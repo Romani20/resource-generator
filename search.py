@@ -27,36 +27,16 @@ low_priority_keywords = ['can', 'has', 'if', 've', "don't", 'weren', 'we', 'ain'
                          'he', 'i', 'student', 'help', 'want', 'we', 'support', 'provide']
 
 
-def convert_description_to_array(description):
-    """
-    Takes user's description and converts it into an array. 
-
-    Args:
-        description (_type_): _description_
-
-    Returns:
-        _type_: _description_
-    """
-    refined_desc = []
-    keywords_list = description.split(" ")
-
-    for i in keywords_list:
-        if i.lower() not in (item.lower() for item in low_priority_keywords):
-            refined_desc.append(i)
-
-    return json.dumps(refined_desc)
-
-
 def remove_low_priority_keywords(user_description):
     """
     Removes words that aren't helpful for the searching process 
     from user's description by using the low priority keywords list above. 
 
     Args:
-        user_description (_type_): _description_
+        user_description (str list): the usersn explicit request
 
     Returns:
-        _type_: _description_
+        str list: a modified list with low priority words removed
     """
     new_list = []
     for i in user_description:
@@ -64,6 +44,25 @@ def remove_low_priority_keywords(user_description):
             new_list.append(i)
 
     return new_list
+
+
+def convert_description_to_array(description):
+    """
+    Takes user's description and converts it into an a json dump
+    , the format of keyords in databse.
+
+    Args:
+        description (str): a description of a user entered resource.
+
+    Returns:
+        json dump: non-low priority words dumped as array
+    """
+    refined_desc = []
+    keywords_list = description.split(" ")
+
+    refined_desc = remove_low_priority_keywords(keywords_list)
+
+    return json.dumps(refined_desc)
 
 
 def find_resource_by_keyword_similarity(results, keywords1):
@@ -86,13 +85,13 @@ def find_resource_by_keyword_similarity(results, keywords1):
         for i in keywords1:
             for result in results:
                 try:
-                    keywords = json.loads(result.keywords)
-                    for processed_keyword in [nlp.vocab[keyword] for keyword in keywords]:
+                    resource_keywords = json.loads(result.keywords)
+                    for processed_keyword in [nlp.vocab[keyword] for keyword in resource_keywords]:
                         for i in remove_low_priority_keywords(keywords1):
                             similarity_score = processed_keyword.similarity(
                                 nlp.vocab[i])
-                        if similarity_score >= 0.3:
-                            filtered_results.add(result)
+                            if similarity_score >= 0.3:
+                                filtered_results.add(result)
                 except json.decoder.JSONDecodeError as e:
                     print(f"Error decoding JSON for result {result.id}: {e}")
 
@@ -101,16 +100,29 @@ def find_resource_by_keyword_similarity(results, keywords1):
 
 if __name__ == "__main__":
     # UNIT TESTS - SEARCH FEATURE
+    #testing remove_low_priority_keywords()
+    strlist = ['i', 'want', 'food']
+    modified = ['food']
+    genericUnitTest(remove_low_priority_keywords, (strlist,), (modified,))
+
+    print("\n")
+    strlist = ['i', 'want', 'had']
+    modified = []
+    genericUnitTest(remove_low_priority_keywords, (strlist,), (modified,))
+
+
     # testing convert_description_to_array()
-    res = ["food"]
+    print("\n")
+    res = '["food"]'
     genericUnitTest(convert_description_to_array, ('i want food',), (res,))
 
     print("\n")
     res = '[]'
     genericUnitTest(convert_description_to_array, ('i had want',), (res,))
 
+
     # testing find_resource_by_keyword_similarity()
-    res1 = models.Resource(keywords=["money", "economics", "finance"])
+    res1 = models.Resource(keywords='["money", "economics", "finance"]')
     filtered_list = [res1]
     result = set([res1])
 
@@ -125,12 +137,12 @@ if __name__ == "__main__":
                     (filtered_list, "I love capital".split(" ")), (result,))
 
     # all low-priority word case
-    # print("\n")
-    # genericUnitTest(find_resource_by_keyword_similarity, (filtered_list, "I want some".split(" ")), (set(),))
+    print("\n")
+    genericUnitTest(find_resource_by_keyword_similarity, (filtered_list, "I want some".split(" ")), (set(),))
 
     # # non-low priority, low similarity word: money and lungs (sim = ~0.13)
-    # print("\n")
-    # genericUnitTest(find_resource_by_keyword_similarity, (filtered_list, "I want my lungs".split(" ")), (set(),))
+    print("\n")
+    genericUnitTest(find_resource_by_keyword_similarity, (filtered_list, "I want my lungs".split(" ")), (set(),))
 
     # part happy, part sad case
     print("\n")
